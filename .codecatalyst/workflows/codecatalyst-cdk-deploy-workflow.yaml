@@ -1,0 +1,36 @@
+Name: codecatalyst-cdk-deploy-workflow
+SchemaVersion: 1.0
+
+Triggers:
+  - Type: PUSH
+    Branches:
+      - master
+Actions:
+  CDKBootstrap:
+    Identifier: aws/cdk-bootstrap@v1
+    Inputs:
+      Sources:
+        - WorkflowSource
+    Environment:
+      Connections:
+        - Role: CodeCatalystWorkflowDevelopmentRole-AutoEvents
+          Name: "115984396435"
+      Name: prod-deploy
+    Configuration:
+      Region: us-west-2
+        
+  CDKDeploy:
+    Identifier: aws/cdk-deploy@v1
+    DependsOn: 
+      - CDKBootstrap
+    Environment:
+      Connections:
+        - Role: CodeCatalystWorkflowDevelopmentRole-AutoEvents
+          Name: "115984396435"
+      Name: prod-deploy
+    Inputs:
+      Sources:
+        - WorkflowSource
+    Configuration:
+      StackName: auto_events
+      Region: us-west-2

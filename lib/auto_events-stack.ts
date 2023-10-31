@@ -9,13 +9,13 @@ export class AutoEventsStack extends Stack {
     super(scope, id, props);
 
     // Make a test rule which calls the lambda every 5 minutes
-    const callback = new Rule(scope, "TestRule", {
+    const callback = new Rule(this, "TestRule", {
       schedule: Schedule.expression("rate(5 minutes)"), 
     });
 
-    const lambda = new Function(scope, "TestLambda", {
+    const lambda = new Function(this, "TestLambda", {
       runtime: Runtime.PYTHON_3_11,
-      code: Code.fromAsset("lambda"),
+      code: Code.fromAsset("lib/lambda"),
       handler: "test_handler.handler"
     });
 

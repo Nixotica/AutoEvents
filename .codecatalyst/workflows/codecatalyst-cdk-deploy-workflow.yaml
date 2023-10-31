@@ -6,22 +6,53 @@ Triggers:
     Branches:
       - master
 Actions:
+  UnitTest:
+    # Identifies the action. Do not modify this value.
+    Identifier: aws/build@v1.0.0
+
+    # Specifies the source and/or artifacts to pass to the action as input.
+    Inputs:
+      # Optional
+      Sources:
+        - WorkflowSource # This specifies that the action requires this Workflow as a source
+
+    Outputs:
+      # Optional; Automatically discover reports for popular test frameworks
+      AutoDiscoverReports:
+        Enabled: true
+        # Use as prefix for the report files
+        ReportNamePrefix: rpt
+
+    # Defines the action's properties.
+    Configuration:
+      # Required - Steps are sequential instructions that run shell commands
+      Steps:
+        - Run: npm run build
+        - Run: npm run test
+        - Run: pip3 install -r requirements.txt
+        - Run: pytest
+        
+
   CDKBootstrap:
     Identifier: aws/cdk-bootstrap@v1
-    Inputs:
-      Sources:
-        - WorkflowSource
     Environment:
       Connections:
         - Role: CodeCatalystWorkflowDevelopmentRole-AutoEvents
           Name: "115984396435"
       Name: prod-deploy
+    Inputs:
+      Sources:
+        - WorkflowSource
+    Compute:
+      Type: EC2
     Configuration:
       Region: us-west-2
-        
+    DependsOn:
+      - UnitTest
+
   CDKDeploy:
     Identifier: aws/cdk-deploy@v1
-    DependsOn: 
+    DependsOn:
       - CDKBootstrap
     Environment:
       Connections:

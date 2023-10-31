@@ -15,8 +15,8 @@ export class AutoEventsStack extends Stack {
 
     const lambda = new Function(this, "TestLambda", {
       runtime: Runtime.PYTHON_3_11,
-      code: Code.fromAsset("lib/lambda"),
-      handler: "test_handler.handler"
+      code: Code.fromAsset("code/src"),
+      handler: "handler.handler"
     });
 
     callback.addTarget(new LambdaFunction(lambda));

@@ -32,5 +32,5 @@ Actions:
       Sources:
         - WorkflowSource
     Configuration:
-      StackName: auto_events
+      StackName: AutoEventsStack
       Region: us-west-2

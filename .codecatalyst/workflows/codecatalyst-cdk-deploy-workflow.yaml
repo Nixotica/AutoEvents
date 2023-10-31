@@ -28,6 +28,7 @@ Actions:
       # Required - Steps are sequential instructions that run shell commands
       Steps:
         - Run: npm install typescript -g
+        - Run: npm install aws-cdk-lib
         - Run: npm run build
         - Run: npm run test
         - Run: pip3 install -r requirements.txt

@@ -1,19 +1,24 @@
-import { Duration, Stack, StackProps } from 'aws-cdk-lib';
-import * as sns from 'aws-cdk-lib/aws-sns';
-import * as subs from 'aws-cdk-lib/aws-sns-subscriptions';
-import * as sqs from 'aws-cdk-lib/aws-sqs';
+import { Stack, StackProps } from 'aws-cdk-lib';
+import { Rule, Schedule } from 'aws-cdk-lib/aws-events';
+import { LambdaFunction } from 'aws-cdk-lib/aws-events-targets';
+import { Code, Function, Runtime } from 'aws-cdk-lib/aws-lambda';
 import { Construct } from 'constructs';
 
 export class AutoEventsStack extends Stack {
   constructor(scope: Construct, id: string, props?: StackProps) {
     super(scope, id, props);
 
-    const queue = new sqs.Queue(this, 'AutoEventsQueue', {
-      visibilityTimeout: Duration.seconds(300)
+    // Make a test rule which calls the lambda every 5 minutes
+    const callback = new Rule(scope, "TestRule", {
+      schedule: Schedule.expression("rate(5 minutes)"), 
     });
 
-    const topic = new sns.Topic(this, 'AutoEventsTopic');
+    const lambda = new Function(scope, "TestLambda", {
+      runtime: Runtime.PYTHON_3_11,
+      code: Code.fromAsset("lambda"),
+      handler: "test_handler.handler"
+    });
 
-    topic.addSubscription(new subs.SqsSubscription(queue));
+    callback.addTarget(new LambdaFunction(lambda));
   }
 }

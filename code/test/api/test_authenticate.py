@@ -1,7 +1,6 @@
 import unittest
-import json
 from unittest.mock import MagicMock, patch
-from src.club.authenticate import authenticate
+from src.api.authenticate import authenticate
 
 
 class TestAuthenticate(unittest.TestCase):

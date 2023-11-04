@@ -1,0 +1,13 @@
+{
+    "spots": [
+      {
+        "spotType": "competition_participant",
+        "seed": 1
+      },
+      {
+        "spotType": "competition_participant",
+        "seed": 2
+      }
+    ],
+    "settings": []
+}

@@ -1,0 +1,17 @@
+{
+  "clubId": 0,
+  "description": null,
+  "name": "",
+  "registrationEndDate": null,
+  "registrationStartDate": null,
+  "rounds": [],
+  "rulesUrl": null,
+  "spotStructure": {
+    "version": 0,
+    "rounds": []
+  },
+  "startDate": "",
+  "maxPlayers": 10000,
+  "allowedZone": "",
+  "participantType": "PLAYER"
+}

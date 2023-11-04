@@ -1,0 +1,38 @@
+{
+    "name": "my_round",
+    "position": 0,
+    "startDate": "2023-11-04T00:50:00.000Z",
+    "endDate": "2023-11-04T01:20:00.000Z",
+    "nbMatches": 0,
+    "qualifier": null,
+    "leaderboardType": "BRACKET",
+    "config": {
+      "name": "my_round",
+      "maps": [],
+      "script": "TrackMania/TM_Cup_Online.Script.txt",
+      "plugin": "",
+      "pluginSettings": {
+        "S_AdImageUrls": "",
+        "S_AutoStartMode": "delay",
+        "S_AutoStartDelay": 600,
+        "S_PickBanStartAuto": false,
+        "S_PickBanOrder": "",
+        "S_EnableReadyManager": true,
+        "S_UseAutoReady": true,
+        "S_ReadyStartRatio": 1,
+        "S_MessageTimer": ""
+      },
+      "maxPlayers": 32,
+      "maxSpectators": 32,
+      "scriptSettings": {
+        "S_PointsRepartition": "",
+        "S_PointsLimit": 100,
+        "S_FinishTimeout": -1,
+        "S_RoundsPerMap": 5,
+        "S_NbOfWinners": 3,
+        "S_WarmUpNb": 1,
+        "S_WarmUpDuration": 120
+      }
+    },
+    "teamLeaderboardType": "TEAM_SCORE"
+  }

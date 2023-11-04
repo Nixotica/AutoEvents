@@ -1,7 +1,9 @@
 from datetime import datetime
+from src.constants import NADEO_DATE_FMT
 from src.api.structure.maps import MapPool
 from src.api.structure.settings import PluginSettings, ScriptSettings
 from src.api.structure.enums import LeaderboardType, PluginType, ScriptType
+import json
 
 
 class QualifierConfig:
@@ -38,3 +40,10 @@ class Qualifier:
         self._start_date = start_date
         self._end_date = end_date
         self._config = config
+
+    def as_jsonable_dict(self) -> dict:
+        """
+        Returns the qualifier as a JSON-able dictionary.
+        """
+        # TODO
+        return {}

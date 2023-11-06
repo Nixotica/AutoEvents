@@ -15,11 +15,10 @@ class RoundConfig:
         map_pool: List[Map],
         script: ScriptType,
         max_players: int,
-        max_spectators: int = None,
-        plugin: PluginType = None,
-        script_settings: ScriptSettings = None,
-        plugin_settings: PluginSettings = None,
-        password: str = None,
+        max_spectators: int = 32,
+        plugin: PluginType = PluginType.EMPTY,
+        script_settings: ScriptSettings = ScriptSettings(),
+        plugin_settings: PluginSettings = PluginSettings(),
     ):
         self._map_pool = map_pool
         self._script = script
@@ -28,7 +27,20 @@ class RoundConfig:
         self._plugin = plugin
         self._script_settings = script_settings
         self._plugin_settings = plugin_settings
-        self._password = password
+
+    def as_jsonable_dict(self) -> dict:
+        """
+        Returns the round config as a JSON-able dictionary.
+        """
+        config = {}
+        config["maps"] = [map._uuid for map in self._map_pool]
+        config["script"] = self._script.value
+        config["maxPlayers"] = self._max_players
+        config["maxSpectators"] = self._max_spectators
+        config["plugin"] = self._plugin.value
+        config["pluginSettings"] = self._plugin_settings.as_jsonable_dict()
+        config["scriptSettings"] = self._script_settings.as_jsonable_dict()
+        return config
 
 
 class Round:
@@ -49,24 +61,22 @@ class Round:
         self._leaderboard_type = leaderboard_type
         self._config = config
         self._qualifier = qualifier
-
-    def has_qualifier(self) -> bool:
-        return self._qualifier is not None
+        self._team_leaderboard_type = "TEAM_SCORE"  # TODO figure out what this is
 
     def as_jsonable_dict(self) -> dict:
         """
         Returns the round as a JSON-able dictionary.
         """
-        with open("templates/round_template.json", "r") as template_file:
-            template_json = json.load(template_file)
-        template_json["name"] = self._name
-        template_json["startDate"] = self._start_date.strftime(NADEO_DATE_FMT)
-        template_json["endDate"] = self._end_date.strftime(NADEO_DATE_FMT)
-        template_json["matches"] = [match.as_jsonable_dict() for match in self._matches]
-        template_json["nbMatches"] = len(self._matches)
-        template_json["leaderboardType"] = self._leaderboard_type
-        template_json["config"] = self._config.as_jsonable_dict()
-        template_json["config"]["name"] = self._name
-        if self._qualifier is not None:
-            template_json["qualifier"] = self._qualifier.as_jsonable_dict()
-        return template_json
+        round = {}
+        round["name"] = self._name
+        round["startDate"] = self._start_date.strftime(NADEO_DATE_FMT)
+        round["endDate"] = self._end_date.strftime(NADEO_DATE_FMT)
+        round["nbMatches"] = len(self._matches)
+        round["leaderboardType"] = self._leaderboard_type.value
+        round["config"] = self._config.as_jsonable_dict()
+        round["config"]["name"] = self._name
+        round["qualifier"] = (
+            self._qualifier.as_jsonable_dict() if self._qualifier else None
+        )
+        round["teamLeaderboardType"] = self._team_leaderboard_type
+        return round

@@ -21,6 +21,13 @@ class QualificationMatchSpot(MatchSpot):
         self._round_position = round_position
         self._rank = rank
 
+    def as_jsonable_dict(self) -> dict:
+        spot = {}
+        spot["spotType"] = self._spot_type.value
+        spot["round_position"] = self._round_position
+        spot["rank"] = self._rank
+        return spot
+
 
 class SeedMatchSpot(MatchSpot):
     def __init__(
@@ -30,6 +37,12 @@ class SeedMatchSpot(MatchSpot):
         super().__init__(SpotType.SEED)
         self._seed = seed
 
+    def as_jsonable_dict(self) -> dict:
+        spot = {}
+        spot["spotType"] = self._spot_type.value
+        spot["seed"] = self._seed
+        return spot
+
 
 class CompetitionMatchSpot(MatchSpot):
     def __init__(
@@ -38,3 +51,9 @@ class CompetitionMatchSpot(MatchSpot):
     ):
         super().__init__(SpotType.COMPETITION)
         self._rank = rank
+
+    def as_jsonable_dict(self) -> dict:
+        spot = {}
+        spot["spotType"] = self._spot_type.value
+        spot["rank"] = self._rank
+        return spot

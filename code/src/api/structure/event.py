@@ -17,7 +17,7 @@ class Event:
         name: str,
         club_id: int,
         rounds: List[Round],
-        description: str = None,
+        description: str = "",
         registration_start_date: datetime = None,
         registration_end_date: datetime = None,
     ):
@@ -55,22 +55,27 @@ class Event:
         """
         pass
 
-    def _as_jsonable_dict(self) -> str:
+    def _as_jsonable_dict(self) -> dict:
         """
         Returns the event as a JSON-able dictionary.
         """
-        with open("templates/event_template.json", "r") as template_file:
-            template_json = json.load(template_file)
-        template_json["clubId"] = self._club_id
-        template_json["name"] = self._name
-        template_json["description"] = self._description
-        template_json["registrationEndDate"] = self._registration_end_date.strftime(
+        event = {}
+        event["name"] = self._name
+        event["clubId"] = self._club_id
+        event["description"] = self._description
+        event["registrationStartDate"] = self._registration_start_date.strftime(
             NADEO_DATE_FMT
         )
-        template_json["registrationStartDate"] = self._registration_start_date.strftime(
+        event["registrationEndDate"] = self._registration_end_date.strftime(
             NADEO_DATE_FMT
         )
-        template_json["rounds"] = [round.as_jsonable_dict() for round in self._rounds]
-        # TODO rules url
-        template_json["spotStructure"] = SpotStructure(self._rounds).as_jsonable_dict()
-        return template_json
+        event["rounds"] = [round.as_jsonable_dict() for round in self._rounds]
+        for i in range(len(self._rounds)):
+            event["rounds"][i]["position"] = i
+        event["rulesUrl"] = None
+        event["spotStructure"] = SpotStructure(self._rounds).as_jsonable_dict()
+        event["startDate"] = ""
+        event["maxPlayers"] = 10000
+        event["allowedZone"] = ""
+        event["participantType"] = "PLAYER"
+        return event

@@ -8,6 +8,7 @@ class LeaderboardType(Enum):
 
     BRACKET = "BRACKET"
     SUMSCORE = "SUMSCORE"
+    SUM = "SUM"
 
     # TODO support more leaderboard types
 
@@ -18,6 +19,7 @@ class ScriptType(Enum):
     """
 
     CUP = "TrackMania/TM_Cup_Online.Script.txt"
+    TIME_ATTACK = "TrackMania/TM_TimeAttack_Online.Script.txt"
 
     # TODO support more script types
 
@@ -27,6 +29,7 @@ class PluginType(Enum):
     The plugin type for a round. I'm actually not sure what other types there are.
     """
 
+    EMPTY = ""
     CLUB = "server-plugins/Club/ClubPlugin.Script.txt"
 
 
@@ -38,3 +41,13 @@ class SpotType(Enum):
     QUALIFICATION = "round_challenge_participant"
     SEED = "competition_participant"
     COMPETITION = "competition_leaderboard"
+
+
+class AutoStartMode(Enum):
+    """
+    The atuo start mode for a round. Determines the condition for when the round starts.
+    """
+
+    DELAY = "delay"
+
+    # TODO support more modes

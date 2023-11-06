@@ -107,19 +107,6 @@ class TestEvent(unittest.TestCase):
 
     @pytest.mark.integration
     def test_post_and_delete_event(self):
-        # with open('code/test/api/structure/resources/verified_event.json') as f:
-        #     event = json.load(f)
-        # token = authenticate("NadeoClubServices", "Basic bml4b3RpY2FAZ21haWwuY29tOlF1b3JpZG9yMjQ/")
-        # response = requests.post(
-        #     url=CREATE_COMP_URL,
-        #     headers={"Authorization": "nadeo_v1 t=" + token},
-        #     json=event,
-        # ).json()
-        # if response["exception"]:
-        #     print("Failed to post event: ", response)
-        #     print(json.dumps(event))
-        # print(response["competition"]["id"])
-
         now = datetime.utcnow()
         event = Event(
             name="my_event",

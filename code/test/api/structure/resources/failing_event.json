@@ -1,0 +1,108 @@
+{
+  "name": "my_event",
+  "clubId": 69352,
+  "description": null,
+  "registrationStartDate": null,
+  "registrationEndDate": null,
+  "rounds": [
+    {
+      "name": "round_1",
+      "startDate": "2023-11-06T06:38:40.000Z",
+      "endDate": "2023-11-06T07:08:40.000Z",
+      "nbMatches": 0,
+      "leaderboardType": "BRACKET",
+      "config": {
+        "maps": [
+          "_jTSBKAuePtwJ2tUz8UZx25rYzl"
+        ],
+        "script": "TrackMania/TM_Cup_Online.Script.txt",
+        "maxPlayers": 32,
+        "maxSpectators": 32,
+        "plugin": "",
+        "pluginSettings": {
+          "S_AdImageUrls": "",
+          "S_AutoStartMode": "delay",
+          "S_AutoStartDelay": 600,
+          "S_PickBanStartAuto": false,
+          "S_PickBanOrder": "",
+          "S_EnableReadyManager": true,
+          "S_UseAutoReady": true,
+          "S_ReadyStartRatio": 1,
+          "S_MessageTimer": ""
+        },
+        "scriptSettings": {
+          "S_PointsRepartition": "",
+          "S_PointsLimit": 100,
+          "S_FinishTimeout": -1,
+          "S_RoundsPerMap": 5,
+          "S_NbOfWinners": 3,
+          "S_WarmUpNb": 1,
+          "S_WarmUpDuration": 120
+        },
+        "name": "round_1"
+      },
+      "qualifier": {
+        "name": "qualifier_1",
+        "startDate": "2023-11-06T05:58:40.000Z",
+        "endDate": "2023-11-06T06:28:40.000Z",
+        "leaderboardType": "SUM",
+        "position": 0,
+        "id": null,
+        "config": {
+          "maps": [
+            "_jTSBKAuePtwJ2tUz8UZx25rYzl"
+          ],
+          "script": "TrackMania/TM_TimeAttack_Online.Script.txt",
+          "plugin": "",
+          "maxPlayers": 64,
+          "maxSpectators": 64,
+          "pluginSettings": {
+            "S_AdImageUrls": "",
+            "S_MessageTimer": ""
+          },
+          "scriptSettings": {
+            "S_TimeLimit": 300,
+            "S_WarmUpNb": 1,
+            "S_WarmUpDuration": 15,
+            "S_ForceLapsNb": 0
+          },
+          "name": "qualifier_1"
+        },
+        "isQualification": true
+      },
+      "teamLeaderboardType": "TEAM_SCORE",
+      "position": 0
+    }
+  ],
+  "rulesUrl": null,
+  "spotStructure": {
+    "version": 0,
+    "rounds": [
+      {
+        "name": "round_1",
+        "matchGeneratorData": {
+          "matches": [
+            {
+              "spots": [
+                {
+                  "spotType": "competition_participant",
+                  "seed": 1
+                },
+                {
+                  "spotType": "competition_participant",
+                  "seed": 2
+                }
+              ],
+              "settings": []
+            }
+          ]
+        },
+        "matchGeneratorType": "spot_filler"
+      }
+    ]
+  },
+  "startDate": "",
+  "maxPlayers": 10000,
+  "allowedZone": "",
+  "participantType": "PLAYER"
+}

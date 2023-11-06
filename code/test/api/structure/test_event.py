@@ -1,4 +1,7 @@
-from datetime import datetime
+from datetime import datetime, timedelta, tzinfo
+from src.api.authenticate import authenticate
+from src.constants import CLUB_AUTO_EVENTS_STAGING, CREATE_COMP_URL
+import pytest
 import os
 import unittest
 import json
@@ -10,6 +13,7 @@ from src.api.structure.round.match import Match
 from src.api.structure.round.round import Round, RoundConfig
 
 from src.api.structure.event import Event
+import requests
 
 
 class TestEvent(unittest.TestCase):
@@ -100,3 +104,67 @@ class TestEvent(unittest.TestCase):
         )._as_jsonable_dict()
 
         self.assertTrue(self.are_json_structures_equal(expected, actual))
+
+    @pytest.mark.integration
+    def test_post_and_delete_event(self):
+        # with open('code/test/api/structure/resources/verified_event.json') as f:
+        #     event = json.load(f)
+        # token = authenticate("NadeoClubServices", "Basic bml4b3RpY2FAZ21haWwuY29tOlF1b3JpZG9yMjQ/")
+        # response = requests.post(
+        #     url=CREATE_COMP_URL,
+        #     headers={"Authorization": "nadeo_v1 t=" + token},
+        #     json=event,
+        # ).json()
+        # if response["exception"]:
+        #     print("Failed to post event: ", response)
+        #     print(json.dumps(event))
+        # print(response["competition"]["id"])
+
+        now = datetime.utcnow()
+        event = Event(
+            name="my_event",
+            club_id=CLUB_AUTO_EVENTS_STAGING,
+            rounds=[
+                Round(
+                    name="round_1",
+                    start_date=now + timedelta(minutes=50),
+                    end_date=now + timedelta(minutes=80),
+                    matches=[
+                        Match(
+                            spots=[
+                                SeedMatchSpot(
+                                    seed=1,
+                                ),
+                                SeedMatchSpot(
+                                    seed=2,
+                                ),
+                            ],
+                        ),
+                    ],
+                    leaderboard_type=LeaderboardType.BRACKET,
+                    config=RoundConfig(
+                        map_pool=[
+                            Map("_jTSBKAuePtwJ2tUz8UZx25rYzl"),
+                        ],
+                        script=ScriptType.CUP,
+                        max_players=32,
+                    ),
+                    qualifier=Qualifier(
+                        name="qualifier_1",
+                        start_date=now + timedelta(minutes=10),
+                        end_date=now + timedelta(minutes=40),
+                        leaderboard_type=LeaderboardType.SUM,
+                        config=QualifierConfig(
+                            map_pool=[Map("_jTSBKAuePtwJ2tUz8UZx25rYzl")],
+                            script=ScriptType.TIME_ATTACK,
+                            max_players=64,
+                        ),
+                    ),
+                ),
+            ],
+        )
+        auth = os.getenv("UBI_AUTH")
+        event.post(auth)
+        self.assertIsNotNone(event._registered_id)
+        event.delete(auth)
+        self.assertIsNone(event._registered_id)

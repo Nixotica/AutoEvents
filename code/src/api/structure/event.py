@@ -1,12 +1,12 @@
 from datetime import datetime
 import json
 import os
-from typing import List, Optional
+from typing import List
 import requests
 from src.api.structure.round.spot_structure import SpotStructure
-from src.constants import CREATE_COMP_URL, NADEO_DATE_FMT
+from src.constants import CREATE_COMP_URL, DELETE_COMP_URL_FMT, NADEO_DATE_FMT
 
-from src.api import authenticate
+from src.api.authenticate import authenticate
 
 from src.api.structure.round.round import Round
 
@@ -17,7 +17,7 @@ class Event:
         name: str,
         club_id: int,
         rounds: List[Round],
-        description: str = "",
+        description: str = None,
         registration_start_date: datetime = None,
         registration_end_date: datetime = None,
     ):
@@ -33,27 +33,53 @@ class Event:
 
     def post(self, auth: str) -> None:
         """
-        Posts the event with the given structure.
+        Posts the event if valid.
 
         :param auth: The authorization token for Ubisoft (e.g. "Basic <user:pass base 64>").
         """
+        if not self.valid():
+            print("Event is not valid, and therefore will not post.")
+            return
+
         token = authenticate("NadeoClubServices", auth)
         response = requests.post(
             url=CREATE_COMP_URL,
             headers={"Authorization": "nadeo_v1 t=" + token},
-            json=json.dumps(self._as_jsonable_dict()),
+            json=self._as_jsonable_dict(),
         ).json()
+        if "exception" in response:
+            print("Failed to post event: ", response)
         self._registered_id = response["competition"]["id"]
 
+    def delete(self, auth: str) -> None:
+        """
+        Deletes this event.
+
+        :param auth: The authorization token for Ubisoft (e.g. "Basic <user:pass base 64>").
+        """
+        if not self._registered_id:
+            print("Could not delete event since it hasn't been posted.")
+            return
+        token = authenticate("NadeoClubServices", auth)
+        requests.post(
+            url=DELETE_COMP_URL_FMT.format(self._registered_id),
+            headers={"Authorization": "nadeo_v1 t=" + token},
+        )
+        self._registered_id = None
+
     @staticmethod
-    def delete(auth: str, event_id: int) -> None:
+    def delete_from_id(auth: str, event_id: int) -> None:
         """
         Deletes the event with the given ID.
 
         :param auth: The authorization token for Ubisoft (e.g. "Basic <user:pass base 64>").
         :param event_id: The ID of the event to delete.
         """
-        pass
+        token = authenticate("NadeoClubServices", auth)
+        requests.post(
+            url=DELETE_COMP_URL_FMT.format(event_id),
+            headers={"Authorization": "nadeo_v1 t=" + token},
+        )
 
     def _as_jsonable_dict(self) -> dict:
         """
@@ -63,11 +89,15 @@ class Event:
         event["name"] = self._name
         event["clubId"] = self._club_id
         event["description"] = self._description
-        event["registrationStartDate"] = self._registration_start_date.strftime(
-            NADEO_DATE_FMT
+        event["registrationStartDate"] = (
+            self._registration_start_date.strftime(NADEO_DATE_FMT)
+            if self._registration_start_date
+            else None
         )
-        event["registrationEndDate"] = self._registration_end_date.strftime(
-            NADEO_DATE_FMT
+        event["registrationEndDate"] = (
+            self._registration_end_date.strftime(NADEO_DATE_FMT)
+            if self._registration_end_date
+            else None
         )
         event["rounds"] = [round.as_jsonable_dict() for round in self._rounds]
         for i in range(len(self._rounds)):
@@ -79,3 +109,28 @@ class Event:
         event["allowedZone"] = ""
         event["participantType"] = "PLAYER"
         return event
+
+    def valid(self) -> bool:
+        """
+        Ensures that event is valid to post. This is because we get very little
+        insight as to why the event is invalid from the response, so we need to check
+        against what we know is allowed/disallowed.
+
+        :returns: True if valid, False otherwise.
+        """
+        now = datetime.utcnow()
+        if self._registration_start_date and self._registration_end_date:
+            if now > self._registration_start_date or now > self._registration_end_date:
+                print("Event registration must be later than current time.")
+                return False
+            if self._registration_start_date > self._registration_end_date:
+                print("Event registration start must be before end.")
+                return False
+        elif self._registration_start_date or self._registration_end_date:
+            print("Event registration start and end must be specified together.")
+
+        # TODO check that all rounds, qualifiers, matches, etc are formed correctly (+ maps are real)
+
+        # TODO check that club id belongs to authorized user
+
+        return True

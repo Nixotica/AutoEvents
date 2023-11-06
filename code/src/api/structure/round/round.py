@@ -6,7 +6,6 @@ from src.api.structure.round.qualifier import Qualifier
 from src.api.structure.enums import LeaderboardType, PluginType, ScriptType
 from src.api.structure.maps import Map
 from src.api.structure.settings import PluginSettings, ScriptSettings
-import json
 
 
 class RoundConfig:

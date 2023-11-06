@@ -1,5 +1,7 @@
 import requests
 
+from src.constants import NADEO_AUTH_URL, UBI_SESSION_URL
+
 
 def authenticate(service: str, auth: str) -> str:
     """
@@ -9,24 +11,19 @@ def authenticate(service: str, auth: str) -> str:
     :param auth: Authorization (e.g. "Basic <user:pass base 64>")
     :return: Authorization token
     """
-    url = "https://public-ubiservices.ubi.com/v3/profiles/sessions"
     headers = {
         "Content-Type": "application/json",
         "Ubi-AppId": "86263886-327a-4328-ac69-527f0d20a237",
         "Authorization": auth,
         "User-Agent": "https://github.com/Nixotica/AutoEvents",
     }
+    result = requests.post(UBI_SESSION_URL, headers=headers).json()
 
-    result = requests.post(url, headers=headers).json()
-
-    url = (
-        "https://prod.trackmania.core.nadeo.online/v2/authentication/token/ubiservices"
-    )
     ticket = result["ticket"]
     headers = {
         "Content-Type": "application/json",
         "Authorization": f"ubi_v1 t={ticket}",
     }
     body = {"audience": service}
-    result = requests.post(url, headers=headers, json=body)
-    return result.json()["accessToken"]
+    result = requests.post(NADEO_AUTH_URL, headers=headers, json=body).json()
+    return result["accessToken"]

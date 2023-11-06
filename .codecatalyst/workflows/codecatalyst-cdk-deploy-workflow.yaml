@@ -33,6 +33,7 @@ Actions:
         - Run: npm run test
         - Run: pip3 install -r requirements.txt
         - Run: pytest
+        - Run: export UBI_AUTH=${Secrets.UBI_AUTH}
         - Run: pytest -m integration
         
 

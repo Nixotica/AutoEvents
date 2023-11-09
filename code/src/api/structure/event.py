@@ -3,6 +3,7 @@ import json
 import os
 from typing import List
 import requests
+from src.api.enums import NadeoService
 from src.api.structure.round.spot_structure import SpotStructure
 from src.constants import CREATE_COMP_URL, DELETE_COMP_URL_FMT, NADEO_DATE_FMT
 
@@ -41,7 +42,7 @@ class Event:
             print("Event is not valid, and therefore will not post.")
             return
 
-        token = authenticate("NadeoClubServices", auth)
+        token = authenticate(NadeoService.CLUB, auth)
         response = requests.post(
             url=CREATE_COMP_URL,
             headers={"Authorization": "nadeo_v1 t=" + token},
@@ -60,7 +61,7 @@ class Event:
         if not self._registered_id:
             print("Could not delete event since it hasn't been posted.")
             return
-        token = authenticate("NadeoClubServices", auth)
+        token = authenticate(NadeoService.CLUB, auth)
         requests.post(
             url=DELETE_COMP_URL_FMT.format(self._registered_id),
             headers={"Authorization": "nadeo_v1 t=" + token},
@@ -75,11 +76,16 @@ class Event:
         :param auth: The authorization token for Ubisoft (e.g. "Basic <user:pass base 64>").
         :param event_id: The ID of the event to delete.
         """
-        token = authenticate("NadeoClubServices", auth)
+        token = authenticate(NadeoService.CLUB, auth)
         requests.post(
             url=DELETE_COMP_URL_FMT.format(event_id),
             headers={"Authorization": "nadeo_v1 t=" + token},
         )
+
+    """
+    TODO Get the registered players from original competition (static method)
+    get_participants_url = f"https://competition.trackmania.nadeo.club/api/competitions/{comp_id}/participants?offset=0&length=50"
+    """
 
     def _as_jsonable_dict(self) -> dict:
         """

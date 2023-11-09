@@ -1,5 +1,6 @@
 import unittest
 from unittest.mock import MagicMock, patch
+from src.api.enums import NadeoService
 from src.api.authenticate import authenticate
 
 
@@ -12,4 +13,4 @@ class TestAuthenticate(unittest.TestCase):
             {"accessToken": "my_token"},
         ]
         mock_request_post.return_value = mock_response
-        self.assertEqual(authenticate("service", "auth"), "my_token")
+        self.assertEqual(authenticate(NadeoService.CLUB, "auth"), "my_token")

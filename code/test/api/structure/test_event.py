@@ -1,6 +1,7 @@
-from datetime import datetime, timedelta, tzinfo
-from src.api.authenticate import authenticate
-from src.constants import CLUB_AUTO_EVENTS_STAGING, CREATE_COMP_URL
+from datetime import datetime, timedelta
+from src.environment import UBI_AUTH
+from test.util import are_json_structures_equal
+from src.constants import CLUB_AUTO_EVENTS_STAGING
 import pytest
 import os
 import unittest
@@ -13,47 +14,9 @@ from src.api.structure.round.match import Match
 from src.api.structure.round.round import Round, RoundConfig
 
 from src.api.structure.event import Event
-import requests
 
 
 class TestEvent(unittest.TestCase):
-    def deep_sort(self, obj):
-        """
-        Recursively sort list or dict nested lists.
-        """
-
-        if isinstance(obj, dict):
-            # Sort the dictionary by key, then sort the values recursively
-            return {k: self.deep_sort(obj[k]) for k in sorted(obj)}
-        elif isinstance(obj, list):
-            # Attempt to sort the list. If this fails (e.g., if it contains dictionaries),
-            # sort each item in the list recursively and turn them into tuples if they are dictionaries
-            try:
-                return sorted(self.deep_sort(x) for x in obj)
-            except TypeError:
-                # The list contains non-orderable items (like dictionaries), sort them as tuples
-                return sorted(
-                    (k, self.deep_sort(v)) if isinstance(v, dict) else self.deep_sort(v)
-                    for k, v in (x.items() for x in obj)
-                )
-        else:
-            # If obj is not a list or dict, return it as is
-            return obj
-
-    def are_json_structures_equal(self, json1: dict, json2: dict):
-        """
-        Check if the given JSON structures are equal, after sorting them recursively.
-        """
-        sorted_json1 = self.deep_sort(json1)
-        sorted_json2 = self.deep_sort(json2)
-
-        with open("expected.json", "w") as f:
-            json.dump(sorted_json1, f)
-        with open("actual.json", "w") as f:
-            json.dump(sorted_json2, f)
-
-        return sorted_json1 == sorted_json2
-
     def test_basic_event_as_jsonable_dict(self):
         with open("code/test/api/structure/resources/basic_event.json") as f:
             expected: dict = json.load(f)
@@ -103,7 +66,7 @@ class TestEvent(unittest.TestCase):
             ],
         )._as_jsonable_dict()
 
-        self.assertTrue(self.are_json_structures_equal(expected, actual))
+        self.assertTrue(are_json_structures_equal(expected, actual))
 
     @pytest.mark.integration
     def test_post_and_delete_event(self):
@@ -150,7 +113,7 @@ class TestEvent(unittest.TestCase):
                 ),
             ],
         )
-        auth = os.getenv("UBI_AUTH")
+        auth = os.getenv(UBI_AUTH)
         event.post(auth)
         self.assertIsNotNone(event._registered_id)
         event.delete(auth)

@@ -32,6 +32,9 @@ class PlaylistMap(Map):
 
         self._position = position
 
+    def __eq__(self, other: PlaylistMap) -> bool:
+        return self._uuid == other._uuid and self._position == other._position
+
     @staticmethod
     def _list_from_campaign_response(response: List[dict]) -> List[PlaylistMap]:
         """

@@ -13,7 +13,7 @@ class TestCampaign(unittest.TestCase):
     def test_get_campaign_map_playlist(self):
         # Auto Events Staging / Test Campaign
         test_club_id = CLUB_AUTO_EVENTS_STAGING
-        test_campaign_id = 492475
+        test_campaign_id = 55190
 
         auth = os.getenv(UBI_AUTH)
 

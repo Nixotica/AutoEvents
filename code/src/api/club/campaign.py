@@ -26,7 +26,6 @@ class Campaign:
         if isinstance(response, list):
             print("Failed to get campaign: ", response)
             return
-        print("got response", response)
         campaign_info = response["campaign"]
 
         self._playlist = PlaylistMap._list_from_campaign_response(

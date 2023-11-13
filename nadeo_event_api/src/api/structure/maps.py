@@ -1,25 +1,34 @@
 from __future__ import annotations
 from typing import List
 
+import requests
+
 
 class Map:
     def __init__(self, uuid: str):
         self._uuid = uuid
 
+    @staticmethod
+    def _get_random() -> Map:
+        """
+        Gets a random map from TMX with an author time between 30 and 70 seconds.
 
-# def get_random_map_uid() -> str:
-#     url = "https://trackmania.exchange/mapsearch2/search?api=on&random=1"
-#     headers = {
-#         "Content-Type": "application/json",
-#         "User-Agent": "Get-random-map / nixotica@gmail.com"
-#     }
-#     max_author_time = 70000
-#     min_author_time = 30000
-#     actual_author_time = 0
-#     while actual_author_time > max_author_time or actual_author_time < min_author_time:
-#         map_info = requests.post(url, headers=headers).json()
-#         actual_author_time = map_info["results"][0]["AuthorTime"]
-#     return map_info["results"][0]["TrackUID"]
+        :returns: UID of a random map.
+        """
+        url = "https://trackmania.exchange/mapsearch2/search?api=on&random=1"
+        headers = {
+            "Content-Type": "application/json",
+            "User-Agent": "Get-random-map / nixotica@gmail.com",
+        }
+        max_author_time = 70000
+        min_author_time = 30000
+        actual_author_time = 0
+        while (
+            actual_author_time > max_author_time or actual_author_time < min_author_time
+        ):
+            map_info = requests.post(url, headers=headers).json()
+            actual_author_time = map_info["results"][0]["AuthorTime"]
+        return Map(map_info["results"][0]["TrackUID"])
 
 
 class PlaylistMap(Map):

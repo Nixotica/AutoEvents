@@ -2,6 +2,7 @@ import json
 from src.api.structure.enums import AutoStartMode
 
 
+# TODO add all these settings https://doc.trackmania.com/club/competition-tool/plugin-settings/
 class PluginSettings:
     def __init__(
         self,
@@ -49,8 +50,7 @@ class QualifierPluginSettings:
         return plugin_settings
 
 
-# TODO find out what common settings exist between script types and make base class, then branch to accomodate
-# for compatability of settings
+# TODO add all these settings https://wiki.trackmania.io/en/dedicated-server/Usage/OfficialGameModesSettings
 class ScriptSettings:
     def __init__(
         self,

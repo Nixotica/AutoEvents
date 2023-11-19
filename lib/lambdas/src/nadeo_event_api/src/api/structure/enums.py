@@ -41,6 +41,7 @@ class SpotType(Enum):
     QUALIFICATION = "round_challenge_participant"
     SEED = "competition_participant"
     COMPETITION = "competition_leaderboard"
+    MATCH = "match_participant"
 
 
 class AutoStartMode(Enum):

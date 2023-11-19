@@ -15,7 +15,7 @@ class QualifierConfig:
         self,
         map_pool: List[Map],
         script: ScriptType,
-        max_players: int,
+        max_players: int = 64,
         max_spectators: int = 64,
         plugin: PluginType = PluginType.EMPTY,
         script_settings: QualifierScriptSettings = QualifierScriptSettings(),

@@ -57,3 +57,24 @@ class CompetitionMatchSpot(MatchSpot):
         spot["spotType"] = self._spot_type.value
         spot["rank"] = self._rank
         return spot
+
+
+class MatchParticipantMatchSpot(MatchSpot):
+    def __init__(
+        self,
+        round_position: int,
+        match_position: int,
+        rank: int,
+    ):
+        super().__init__(SpotType.MATCH)
+        self._round_position = round_position
+        self._match_position = match_position
+        self._rank = rank
+
+    def as_jsonable_dict(self) -> dict:
+        spot = {}
+        spot["spotType"] = self._spot_type.value
+        spot["roundPosition"] = self._round_position
+        spot["matchPosition"] = self._match_position
+        spot["rank"] = self._rank
+        return spot

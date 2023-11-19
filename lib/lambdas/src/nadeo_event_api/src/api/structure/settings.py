@@ -8,14 +8,16 @@ class PluginSettings:
         self,
         auto_start_mode: AutoStartMode = AutoStartMode.DELAY,
         auto_start_delay: int = 600,
+        pick_ban_start_auto: bool = False,
+        pick_ban_order: str = "",
     ):
         self._auto_start_mode = auto_start_mode
         self._auto_start_delay = auto_start_delay
+        self._pick_ban_start_auto = pick_ban_start_auto
+        self._pick_ban_order = pick_ban_order
 
         # TODO make these configurable once I know what they mean
         self._ad_image_urls = ""
-        self._pick_ban_start_auto = False
-        self._pick_ban_order = ""
         self._enable_ready_manager = True
         self._use_auto_ready = True
         self._ready_start_ratio = 1

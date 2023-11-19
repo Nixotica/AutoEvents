@@ -22,6 +22,9 @@ class TestCampaign(unittest.TestCase):
         expected = [
             PlaylistMap("UGGBkWkQrVhRN_A21iPrC7N1vzl", 0),
             PlaylistMap("rWQJGIHxjigGa0yB8KiNmwBLMCe", 1),
+            PlaylistMap("55swQ8IfqZCkloLBFnMDQjOGRii", 2),
+            PlaylistMap("qixNDvlk9TPcStquClVVoSftNwj", 3),
+            PlaylistMap("fdArnftBTYFWzhqfiGIgjjl3XJ3", 4),
         ]
 
         self.assertEqual(expected, test_campaign._playlist)

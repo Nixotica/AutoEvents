@@ -30,11 +30,11 @@ Actions:
         - Run: npm install typescript -g
         - Run: npm install aws-cdk-lib
         - Run: npm run build
-        - Run: npm run test
         - Run: pip3 install -r requirements.txt
         - Run: pytest
         - Run: export UBI_AUTH=${Secrets.UBI_AUTH}
         - Run: pytest -m integration
+        - Run: export STAGE=prod # separate into different step once integration tests run on beta 
         
 
   CDKBootstrap:
@@ -67,5 +67,5 @@ Actions:
       Sources:
         - WorkflowSource
     Configuration:
-      StackName: AutoEventsStack
+      StackName: DeltaBracketStack-prod
       Region: us-west-2

@@ -1,9 +1,10 @@
 import { Stack, StackProps } from "aws-cdk-lib";
 import { Rule, RuleTargetInput, Schedule } from "aws-cdk-lib/aws-events";
 import { LambdaFunction } from "aws-cdk-lib/aws-events-targets";
-import { Code, Function, Runtime } from "aws-cdk-lib/aws-lambda";
+import { PythonFunction } from "@aws-cdk/aws-lambda-python-alpha";
 import { Bucket } from "aws-cdk-lib/aws-s3";
 import { Construct } from "constructs";
+import { Runtime } from "aws-cdk-lib/aws-lambda";
 
 export interface DeltaBracketStackProps extends StackProps {
     /** The stage of this stack (dev, beta, prod, etc) */
@@ -32,10 +33,11 @@ export class DeltaBracketStack extends Stack {
         });
 
         // Create lambda which handles event actions
-        const lambda = new Function(this, "DeltaBracketEventActionsLambda", {
+        const lambda = new PythonFunction(this, "DeltaBracketEventActionsLambda", {
             runtime: Runtime.PYTHON_3_10,
-            code: Code.fromAsset("./lib/lambdas/src/"),
-            handler: "lambda_handler.handler",
+            entry: "./lib/lambdas/src/",
+            index: "lambda_handler.py",
+            handler: "handler",
             environment: {
                 "EVENT_NAME": props.event_name,
                 "CLUB_ID": props.club_id.toString(),

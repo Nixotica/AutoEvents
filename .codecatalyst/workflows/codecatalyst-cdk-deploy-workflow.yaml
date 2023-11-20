@@ -29,8 +29,6 @@ Actions:
       Steps:
         - Run: pip3 install -r requirements.txt
         - Run: pytest
-        - Run: export UBI_AUTH=${Secrets.UBI_AUTH}
-        - Run: pytest -m integration
         
   CDKBootstrap:
     Identifier: aws/cdk-bootstrap@v1

@@ -1,10 +1,10 @@
 from __future__ import annotations
-from src.api.authenticate import authenticate
-from src.api.enums import NadeoService
+from nadeo_event_api.src.api.authenticate import authenticate
+from nadeo_event_api.src.api.enums import NadeoService
 import requests
-from src.constants import CLUB_CAMPAIGN_URL_FMT
+from nadeo_event_api.src.constants import CLUB_CAMPAIGN_URL_FMT
 
-from src.api.structure.maps import PlaylistMap
+from nadeo_event_api.src.api.structure.maps import PlaylistMap
 
 
 class Campaign:

@@ -1,5 +1,5 @@
 from typing import List
-from src.api.structure.round.round import Round
+from nadeo_event_api.src.api.structure.round.round import Round
 
 
 class SpotStructure:

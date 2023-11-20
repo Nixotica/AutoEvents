@@ -1,10 +1,10 @@
 from datetime import datetime
 from typing import List
-from src.api.structure.round.match import Match
-from src.api.structure.round.round import RoundConfig
-from src.api.structure.round.qualifier import Qualifier
-from src.api.structure.enums import SpotType
-from src.components.bracket_round import BracketRound
+from api.structure.round.match import Match
+from api.structure.round.round import RoundConfig
+from api.structure.round.qualifier import Qualifier
+from api.structure.enums import SpotType
+from components.bracket_round import BracketRound
 
 
 class SingleElimBracketRound(BracketRound):

@@ -1,7 +1,7 @@
 import requests
-from src.api.enums import NadeoService
+from nadeo_event_api.src.api.enums import NadeoService
 
-from src.constants import NADEO_AUTH_URL, UBI_SESSION_URL
+from nadeo_event_api.src.constants import NADEO_AUTH_URL, UBI_SESSION_URL
 
 
 def authenticate(service: NadeoService, auth: str) -> str:

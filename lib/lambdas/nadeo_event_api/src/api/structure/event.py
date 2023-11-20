@@ -1,15 +1,17 @@
 from datetime import datetime
-import json
-import os
 from typing import List
 import requests
-from src.api.enums import NadeoService
-from src.api.structure.round.spot_structure import SpotStructure
-from src.constants import CREATE_COMP_URL, DELETE_COMP_URL_FMT, NADEO_DATE_FMT
+from nadeo_event_api.src.api.enums import NadeoService
+from nadeo_event_api.src.api.structure.round.spot_structure import SpotStructure
+from nadeo_event_api.src.constants import (
+    CREATE_COMP_URL,
+    DELETE_COMP_URL_FMT,
+    NADEO_DATE_FMT,
+)
 
-from src.api.authenticate import authenticate
+from nadeo_event_api.src.api.authenticate import authenticate
 
-from src.api.structure.round.round import Round
+from nadeo_event_api.src.api.structure.round.round import Round
 
 
 class Event:

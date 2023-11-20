@@ -1,10 +1,10 @@
 from abc import abstractmethod
 from datetime import datetime
 from typing import List
-from src.api.structure.round.qualifier import Qualifier
-from src.api.structure.round.round import Round
-from src.components.enums import BracketType
-from src.api.structure.event import Event
+from api.structure.round.qualifier import Qualifier
+from api.structure.round.round import Round
+from components.enums import BracketType
+from api.structure.event import Event
 
 
 class BracketEvent(Event):

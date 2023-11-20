@@ -1,13 +1,13 @@
 from datetime import datetime, timedelta
 from math import ceil, log2
 from typing import List
-from src.api.structure.maps import Map
-from src.api.structure.enums import ScriptType, SpotType
-from src.api.structure.round.qualifier import Qualifier
-from src.components.single_elim.single_elim_bracket_round import SingleElimBracketRound
-from src.api.structure.round.round import Round, RoundConfig
-from src.components.enums import BracketType
-from src.components.bracket_event import BracketEvent
+from api.structure.maps import Map
+from api.structure.enums import ScriptType, SpotType
+from api.structure.round.qualifier import Qualifier
+from components.single_elim.single_elim_bracket_round import SingleElimBracketRound
+from api.structure.round.round import Round, RoundConfig
+from components.enums import BracketType
+from components.bracket_event import BracketEvent
 
 
 class SingleElimBracketEvent(BracketEvent):

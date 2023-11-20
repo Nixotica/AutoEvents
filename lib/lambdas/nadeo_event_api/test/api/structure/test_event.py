@@ -19,7 +19,7 @@ from src.api.structure.event import Event
 class TestEvent(unittest.TestCase):
     def test_basic_event_as_jsonable_dict(self):
         with open(
-            "lib/lambdas/src/nadeo_event_api/test/api/structure/resources/basic_event.json"
+            "lib/lambdas/nadeo_event_api/test/api/structure/resources/basic_event.json"
         ) as f:
             expected: dict = json.load(f)
         actual = Event(

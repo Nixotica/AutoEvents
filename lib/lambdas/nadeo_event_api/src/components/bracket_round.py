@@ -1,10 +1,10 @@
 from abc import abstractmethod
 from datetime import datetime
 from typing import List
-from src.api.structure.round.match import Match
-from src.api.structure.enums import LeaderboardType, SpotType
-from src.api.structure.round.qualifier import Qualifier
-from src.api.structure.round.round import Round, RoundConfig
+from api.structure.round.match import Match
+from api.structure.enums import LeaderboardType, SpotType
+from api.structure.round.qualifier import Qualifier
+from api.structure.round.round import Round, RoundConfig
 
 
 class BracketRound(Round):

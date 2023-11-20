@@ -9,7 +9,7 @@ def handler(event, context):
     1. Delta bracket v1
     """
 
-    event_name = event["event"]
+    event_name = event["event_name"]
     if event_name == "delta_bracket_v1":
         return delta_bracket_v1_handler(event, context)
     else:

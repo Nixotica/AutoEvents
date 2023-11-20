@@ -1,6 +1,6 @@
 from abc import ABC
 
-from src.api.structure.enums import SpotType
+from nadeo_event_api.src.api.structure.enums import SpotType
 
 
 class MatchSpot(ABC):

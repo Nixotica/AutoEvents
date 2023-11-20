@@ -1,13 +1,17 @@
 from datetime import datetime
 from typing import List
-from src.constants import NADEO_DATE_FMT
-from src.api.structure.maps import Map
-from src.api.structure.settings import (
+from nadeo_event_api.src.constants import NADEO_DATE_FMT
+from nadeo_event_api.src.api.structure.maps import Map
+from nadeo_event_api.src.api.structure.settings import (
     PluginSettings,
     QualifierPluginSettings,
     QualifierScriptSettings,
 )
-from src.api.structure.enums import LeaderboardType, PluginType, ScriptType
+from nadeo_event_api.src.api.structure.enums import (
+    LeaderboardType,
+    PluginType,
+    ScriptType,
+)
 
 
 class QualifierConfig:

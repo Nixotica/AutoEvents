@@ -1,5 +1,4 @@
-import json
-from src.api.structure.enums import AutoStartMode
+from nadeo_event_api.src.api.structure.enums import AutoStartMode
 
 
 # TODO add all these settings https://doc.trackmania.com/club/competition-tool/plugin-settings/

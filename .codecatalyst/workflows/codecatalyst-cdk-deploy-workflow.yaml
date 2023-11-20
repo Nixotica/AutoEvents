@@ -27,45 +27,127 @@ Actions:
     Configuration:
       # Required - Steps are sequential instructions that run shell commands
       Steps:
-        - Run: npm install typescript -g
-        - Run: npm install aws-cdk-lib
-        - Run: npm run build
         - Run: pip3 install -r requirements.txt
         - Run: pytest
         - Run: export UBI_AUTH=${Secrets.UBI_AUTH}
         - Run: pytest -m integration
         - Run: export STAGE=prod # separate into different step once integration tests run on beta 
         
+  BetaDeploy:
+    # Identifies the action. Do not modify this value.
+    Identifier: aws/build@v1.0.0
 
-  CDKBootstrap:
-    Identifier: aws/cdk-bootstrap@v1
-    Environment:
-      Connections:
-        - Role: CodeCatalystWorkflowDevelopmentRole-AutoEvents
-          Name: "115984396435"
-      Name: prod-deploy
+    # Specifies the source and/or artifacts to pass to the action as input.
     Inputs:
+      # Optional
       Sources:
-        - WorkflowSource
-    Compute:
-      Type: EC2
+        - WorkflowSource # This specifies that the action requires this Workflow as a source
+
+    Outputs:
+      # Optional; Automatically discover reports for popular test frameworks
+      AutoDiscoverReports:
+        Enabled: true
+        # Use as prefix for the report files
+        ReportNamePrefix: rpt
+
+    # Defines the action's properties.
     Configuration:
-      Region: us-west-2
+      # Required - Steps are sequential instructions that run shell commands
+      Steps:
+        - Run: npm install typescript -g
+        - Run: npm install aws-cdk-lib
+        - Run: export UBI_AUTH=${Secrets.UBI_AUTH}
+        - Run: export STAGE=beta
+        - Run: npm run build
+        - Run: cdk deploy DeltaBracketStack-beta
     DependsOn:
       - UnitTest
+        
+  IntegrationTest:
+    # Identifies the action. Do not modify this value.
+    Identifier: aws/build@v1.0.0
 
-  CDKDeploy:
-    Identifier: aws/cdk-deploy@v1
-    DependsOn:
-      - CDKBootstrap
-    Environment:
-      Connections:
-        - Role: CodeCatalystWorkflowDevelopmentRole-AutoEvents
-          Name: "115984396435"
-      Name: prod-deploy
+    # Specifies the source and/or artifacts to pass to the action as input.
     Inputs:
+      # Optional
       Sources:
-        - WorkflowSource
+        - WorkflowSource # This specifies that the action requires this Workflow as a source
+
+    Outputs:
+      # Optional; Automatically discover reports for popular test frameworks
+      AutoDiscoverReports:
+        Enabled: true
+        # Use as prefix for the report files
+        ReportNamePrefix: rpt
+
+    # Defines the action's properties.
     Configuration:
-      StackName: DeltaBracketStack-prod
-      Region: us-west-2
+      # Required - Steps are sequential instructions that run shell commands
+      Steps:
+        - Run: pip3 install -r requirements.txt
+        - Run: export UBI_AUTH=${Secrets.UBI_AUTH}
+        - Run: pytest -m integration 
+    DependsOn:
+      - BetaDeploy
+
+  ProdDeploy:
+    # Identifies the action. Do not modify this value.
+    Identifier: aws/build@v1.0.0
+
+    # Specifies the source and/or artifacts to pass to the action as input.
+    Inputs:
+      # Optional
+      Sources:
+        - WorkflowSource # This specifies that the action requires this Workflow as a source
+
+    Outputs:
+      # Optional; Automatically discover reports for popular test frameworks
+      AutoDiscoverReports:
+        Enabled: true
+        # Use as prefix for the report files
+        ReportNamePrefix: rpt
+
+    # Defines the action's properties.
+    Configuration:
+      # Required - Steps are sequential instructions that run shell commands
+      Steps:
+        - Run: npm install typescript -g
+        - Run: npm install aws-cdk-lib
+        - Run: export UBI_AUTH=${Secrets.UBI_AUTH}
+        - Run: export STAGE=prod
+        - Run: npm run build
+        - Run: cdk deploy DeltaBracketStack-prod
+    DependsOn:
+      - IntegrationTest
+#   CDKBootstrap:
+#     Identifier: aws/cdk-bootstrap@v1
+#     Environment:
+#       Connections:
+#         - Role: CodeCatalystWorkflowDevelopmentRole-AutoEvents
+#           Name: "115984396435"
+#       Name: prod-deploy
+#     Inputs:
+#       Sources:
+#         - WorkflowSource
+#     Compute:
+#       Type: EC2
+#     Configuration:
+#       Region: us-west-2
+#     DependsOn:
+#       - IntegrationTest
+
+#   CDKDeploy:
+#     Identifier: aws/cdk-deploy@v1
+#     DependsOn:
+#       - CDKBootstrap
+#     Environment:
+#       Connections:
+#         - Role: CodeCatalystWorkflowDevelopmentRole-AutoEvents
+#           Name: "115984396435"
+#       Name: prod-deploy
+#     Inputs:
+#       Sources:
+#         - WorkflowSource
+#     Configuration:
+#       StackName: DeltaBracketStack-prod
+#       Region: us-west-2

@@ -4,9 +4,7 @@ import { DeltaBracketStack } from '../lib/stacks/delta_bracket_v1/delta_bracket_
 
 const app = new cdk.App();
 
-const stage = process.env.STAGE;
 const ubi_auth = process.env.UBI_AUTH;
-
 
 if (!ubi_auth) {
     console.log('Environment variable UBI_AUTH is required');
@@ -14,22 +12,17 @@ if (!ubi_auth) {
 }
 
 // For local testing, make sure you've run `export STAGE=dev`
-if (stage == 'dev' || stage == 'beta') {
-    new DeltaBracketStack(app, 'DeltaBracketStack-dev', {
-        stage: stage,
-        event_name: "Delta Bracket Dev Test",
-        club_id: 69352, // "Auto Events Staging"
-        campaign_id: 55190, // "DO NOT MODIFY"
-        ubi_auth: ubi_auth,
-    });
-} else if (stage == 'prod') {
-    new DeltaBracketStack(app, 'DeltaBracketStack-prod', {
-        stage: stage,
-        event_name: "Delta Bracket Beta",
-        club_id: 58261, // "Auto Events"
-        campaign_id: 55644, // "Delta Bracket Beta"
-        ubi_auth: ubi_auth,
-    });
-} else {
-    console.log('Environment variable STAGE is required');
-}
+new DeltaBracketStack(app, 'DeltaBracketStack-beta', {
+    stage: 'beta',
+    event_name: "Delta Bracket Dev Test",
+    club_id: 69352, // "Auto Events Staging"
+    campaign_id: 55190, // "DO NOT MODIFY"
+    ubi_auth: ubi_auth,
+});
+new DeltaBracketStack(app, 'DeltaBracketStack-prod', {
+    stage: 'prod',
+    event_name: "Delta Bracket Beta",
+    club_id: 58261, // "Auto Events"
+    campaign_id: 55644, // "Delta Bracket Beta"
+    ubi_auth: ubi_auth,
+});

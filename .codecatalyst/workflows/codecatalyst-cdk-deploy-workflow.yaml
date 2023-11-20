@@ -31,37 +31,39 @@ Actions:
         - Run: pytest
         - Run: export UBI_AUTH=${Secrets.UBI_AUTH}
         - Run: pytest -m integration
-        - Run: export STAGE=prod # separate into different step once integration tests run on beta 
         
-  BetaDeploy:
-    # Identifies the action. Do not modify this value.
-    Identifier: aws/build@v1.0.0
-
-    # Specifies the source and/or artifacts to pass to the action as input.
+  CDKBootstrap:
+    Identifier: aws/cdk-bootstrap@v1
+    Environment:
+      Connections:
+        - Role: CodeCatalystWorkflowDevelopmentRole-AutoEvents
+          Name: "115984396435"
+      Name: prod-deploy
     Inputs:
-      # Optional
       Sources:
-        - WorkflowSource # This specifies that the action requires this Workflow as a source
-
-    Outputs:
-      # Optional; Automatically discover reports for popular test frameworks
-      AutoDiscoverReports:
-        Enabled: true
-        # Use as prefix for the report files
-        ReportNamePrefix: rpt
-
-    # Defines the action's properties.
+        - WorkflowSource
+    Compute:
+      Type: EC2
     Configuration:
-      # Required - Steps are sequential instructions that run shell commands
-      Steps:
-        - Run: npm install typescript -g
-        - Run: npm install aws-cdk-lib
-        - Run: export UBI_AUTH=${Secrets.UBI_AUTH}
-        - Run: export STAGE=beta
-        - Run: npm run build
-        - Run: cdk deploy DeltaBracketStack-beta
+      Region: us-west-2
     DependsOn:
       - UnitTest
+
+  BetaDeploy:
+    Identifier: aws/cdk-deploy@v1
+    Environment:
+      Connections:
+        - Role: CodeCatalystWorkflowDevelopmentRole-AutoEvents
+          Name: "115984396435"
+      Name: prod-deploy
+    Inputs:
+      Sources:
+        - WorkflowSource
+    Configuration:
+      StackName: DeltaBracketStack-beta
+      Region: us-west-2
+    DependsOn:
+      - CDKBootstrap
         
   IntegrationTest:
     # Identifies the action. Do not modify this value.
@@ -91,63 +93,18 @@ Actions:
       - BetaDeploy
 
   ProdDeploy:
-    # Identifies the action. Do not modify this value.
-    Identifier: aws/build@v1.0.0
-
-    # Specifies the source and/or artifacts to pass to the action as input.
+    Identifier: aws/cdk-deploy@v1
+    Environment:
+      Connections:
+        - Role: CodeCatalystWorkflowDevelopmentRole-AutoEvents
+          Name: "115984396435"
+      Name: prod-deploy
     Inputs:
-      # Optional
       Sources:
-        - WorkflowSource # This specifies that the action requires this Workflow as a source
-
-    Outputs:
-      # Optional; Automatically discover reports for popular test frameworks
-      AutoDiscoverReports:
-        Enabled: true
-        # Use as prefix for the report files
-        ReportNamePrefix: rpt
-
-    # Defines the action's properties.
+        - WorkflowSource
     Configuration:
-      # Required - Steps are sequential instructions that run shell commands
-      Steps:
-        - Run: npm install typescript -g
-        - Run: npm install aws-cdk-lib
-        - Run: export UBI_AUTH=${Secrets.UBI_AUTH}
-        - Run: export STAGE=prod
-        - Run: npm run build
-        - Run: cdk deploy DeltaBracketStack-prod
+      StackName: DeltaBracketStack-prod
+      Region: us-west-2
     DependsOn:
       - IntegrationTest
-#   CDKBootstrap:
-#     Identifier: aws/cdk-bootstrap@v1
-#     Environment:
-#       Connections:
-#         - Role: CodeCatalystWorkflowDevelopmentRole-AutoEvents
-#           Name: "115984396435"
-#       Name: prod-deploy
-#     Inputs:
-#       Sources:
-#         - WorkflowSource
-#     Compute:
-#       Type: EC2
-#     Configuration:
-#       Region: us-west-2
-#     DependsOn:
-#       - IntegrationTest
-
-#   CDKDeploy:
-#     Identifier: aws/cdk-deploy@v1
-#     DependsOn:
-#       - CDKBootstrap
-#     Environment:
-#       Connections:
-#         - Role: CodeCatalystWorkflowDevelopmentRole-AutoEvents
-#           Name: "115984396435"
-#       Name: prod-deploy
-#     Inputs:
-#       Sources:
-#         - WorkflowSource
-#     Configuration:
-#       StackName: DeltaBracketStack-prod
-#       Region: us-west-2
+      

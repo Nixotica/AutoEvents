@@ -8,3 +8,10 @@ node_modules
 cdk.out
 
 *.pyc
+
+# Ignore any new dependencies in lambdas except source code
+lib/lambdas/src/*
+!lib/lambdas/src/delta_bracket_v1
+!lib/lambdas/src/nadeo_event_api
+!lib/lambdas/src/auto_cup_v1
+!lib/lambdas/src/lambda_handler.py

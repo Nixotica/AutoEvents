@@ -18,8 +18,8 @@ export interface DeltaBracketStackProps extends StackProps {
     /** The campaign containing the map pool to use for the event. */
     campaign_id: number,
 
-    /** The UBI authorization (Basic <user:pass base 64>) to use with the API. */
-    ubi_auth: string,
+    /** A common Auto Events bucket containing secrets to give lambdas read access to */
+    secrets_bucket: Bucket,
 }
 
 export class DeltaBracketStack extends Stack {
@@ -35,13 +35,13 @@ export class DeltaBracketStack extends Stack {
         const lambda = new Function(this, "DeltaBracketEventActionsLambda", {
             runtime: Runtime.PYTHON_3_10,
             code: Code.fromAsset("./lib/lambdas/src/"),
-            handler: "delta_bracket_v1.lambda_handler.handler",
+            handler: "lambda_handler.handler",
             environment: {
                 "EVENT_NAME": props.event_name,
-                "UBI_AUTH": props.ubi_auth,
                 "CLUB_ID": props.club_id.toString(),
                 "CAMPAIGN_ID": props.campaign_id.toString(),
                 "STORAGE_BUCKET_NAME": bucket.bucketName,
+                "SECRETS_BUCKET_NAME": props.secrets_bucket.bucketName,
             }
         });
 
@@ -66,16 +66,22 @@ export class DeltaBracketStack extends Stack {
         // Call lambda with appropriate payload for create and delete
         createEventRule.addTarget(new LambdaFunction(lambda, {
             event: RuleTargetInput.fromObject({
+                "event_name": "delta_bracket_v1",
                 "action": "create"
             })
         }));
         deleteEventRule.addTarget(new LambdaFunction(lambda, {
             event: RuleTargetInput.fromObject({
+                "event_name": "delta_bracket_v1",
                 "action": "delete"
             })
         }));
 
         // Grant lambda permissions to read/write to the bucket
         bucket.grantReadWrite(lambda);
+
+        // Give it access to read secrets from secrets bucket
+        props.secrets_bucket.grantRead(lambda);
+
     }
 }

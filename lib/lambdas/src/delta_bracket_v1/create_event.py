@@ -1,35 +1,35 @@
 from datetime import datetime, timedelta
 import os
 from typing import List
-from lib.lambdas.src.nadeo_event_api.src.api.club.campaign import Campaign
-from lib.lambdas.src.nadeo_event_api.src.api.structure.enums import (
+from delta_bracket_v1.s3 import get_ubi_auth_from_secrets
+from nadeo_event_api.src.api.club.campaign import Campaign
+from nadeo_event_api.src.api.structure.enums import (
     LeaderboardType,
     ScriptType,
 )
-from lib.lambdas.src.nadeo_event_api.src.api.structure.event import Event
-from lib.lambdas.src.nadeo_event_api.src.api.structure.maps import Map
-from lib.lambdas.src.nadeo_event_api.src.api.structure.round.match import Match
-from lib.lambdas.src.nadeo_event_api.src.api.structure.round.match_spot import (
+from nadeo_event_api.src.api.structure.event import Event
+from nadeo_event_api.src.api.structure.maps import Map
+from nadeo_event_api.src.api.structure.round.match import Match
+from nadeo_event_api.src.api.structure.round.match_spot import (
     MatchParticipantMatchSpot,
     SeedMatchSpot,
 )
-from lib.lambdas.src.nadeo_event_api.src.api.structure.round.qualifier import (
+from nadeo_event_api.src.api.structure.round.qualifier import (
     Qualifier,
     QualifierConfig,
 )
-from lib.lambdas.src.nadeo_event_api.src.api.structure.round.round import (
+from nadeo_event_api.src.api.structure.round.round import (
     Round,
     RoundConfig,
 )
-from lib.lambdas.src.nadeo_event_api.src.api.structure.settings import (
+from nadeo_event_api.src.api.structure.settings import (
     PluginSettings,
     ScriptSettings,
 )
-from lib.lambdas.src.nadeo_event_api.src.environment import (
+from nadeo_event_api.src.environment import (
     CAMPAIGN_ID,
     CLUB_ID,
     EVENT_NAME,
-    UBI_AUTH,
 )
 
 
@@ -187,7 +187,7 @@ def create_event() -> int:
 
     :returns: Registered event ID of the event.
     """
-    auth = os.getenv(UBI_AUTH)
+    auth = get_ubi_auth_from_secrets()
     event_name = os.getenv(EVENT_NAME)
     club_id = os.getenv(CLUB_ID)
     campaign_id = os.getenv(CAMPAIGN_ID)

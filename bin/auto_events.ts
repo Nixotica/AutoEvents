@@ -1,28 +1,41 @@
 #!/usr/bin/env node
 import * as cdk from 'aws-cdk-lib';
 import { DeltaBracketStack } from '../lib/stacks/delta_bracket_v1/delta_bracket_stack';
+import { AutoEventsStack } from '../lib/stacks/auto_events_stack';
 
 const app = new cdk.App();
-
-const ubi_auth = process.env.UBI_AUTH;
-
-if (!ubi_auth) {
-    console.log('Environment variable UBI_AUTH is required');
-    process.exit(1);
+const env = {
+    account: "115984396435"
 }
 
+// Common resources stack
+const resourcesStack = new AutoEventsStack(app, 'AutoEventsStack-beta', {env: env});
+
 // For local testing, make sure you've run `export STAGE=dev`
-new DeltaBracketStack(app, 'DeltaBracketStack-beta', {
-    stage: 'beta',
-    event_name: "Delta Bracket Dev Test",
-    club_id: 69352, // "Auto Events Staging"
-    campaign_id: 55190, // "DO NOT MODIFY"
-    ubi_auth: ubi_auth,
-});
-new DeltaBracketStack(app, 'DeltaBracketStack-prod', {
-    stage: 'prod',
-    event_name: "Delta Bracket Beta",
-    club_id: 58261, // "Auto Events"
-    campaign_id: 55644, // "Delta Bracket Beta"
-    ubi_auth: ubi_auth,
-});
+if (process.env.STAGE == 'dev') {
+    new DeltaBracketStack(app, 'DeltaBracketStack-dev', {
+        env: env,
+        stage: 'dev',
+        event_name: "Delta Bracket Dev Test",
+        club_id: 69352, // "Auto Events Staging"
+        campaign_id: 55190, // "DO NOT MODIFY"
+        secrets_bucket: resourcesStack.secretsBucket,
+    });
+} else {
+    new DeltaBracketStack(app, 'DeltaBracketStack-beta', {
+        env: env,
+        stage: 'beta',
+        event_name: "Delta Bracket Beta Test",
+        club_id: 69352, // "Auto Events Staging"
+        campaign_id: 55190, // "DO NOT MODIFY"
+        secrets_bucket: resourcesStack.secretsBucket,
+    });
+    new DeltaBracketStack(app, 'DeltaBracketStack-prod', {
+        env: env,
+        stage: 'prod',
+        event_name: "Delta Bracket Beta",
+        club_id: 58261, // "Auto Events"
+        campaign_id: 55644, // "Delta Bracket Beta"
+        secrets_bucket: resourcesStack.secretsBucket,
+    });
+}

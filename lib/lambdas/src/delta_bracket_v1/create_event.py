@@ -1,19 +1,16 @@
 from datetime import datetime, timedelta
 import os
 from typing import List
-from lib.lambdas.src.nadeo_event_api.src.api.authenticate import authenticate
 from lib.lambdas.src.nadeo_event_api.src.api.club.campaign import Campaign
-from lib.lambdas.src.nadeo_event_api.src.api.enums import NadeoService
 from lib.lambdas.src.nadeo_event_api.src.api.structure.enums import (
     LeaderboardType,
     ScriptType,
 )
 from lib.lambdas.src.nadeo_event_api.src.api.structure.event import Event
-from lib.lambdas.src.nadeo_event_api.src.api.structure.maps import Map, PlaylistMap
+from lib.lambdas.src.nadeo_event_api.src.api.structure.maps import Map
 from lib.lambdas.src.nadeo_event_api.src.api.structure.round.match import Match
 from lib.lambdas.src.nadeo_event_api.src.api.structure.round.match_spot import (
     MatchParticipantMatchSpot,
-    QualificationMatchSpot,
     SeedMatchSpot,
 )
 from lib.lambdas.src.nadeo_event_api.src.api.structure.round.qualifier import (
@@ -26,8 +23,6 @@ from lib.lambdas.src.nadeo_event_api.src.api.structure.round.round import (
 )
 from lib.lambdas.src.nadeo_event_api.src.api.structure.settings import (
     PluginSettings,
-    QualifierPluginSettings,
-    QualifierScriptSettings,
     ScriptSettings,
 )
 from lib.lambdas.src.nadeo_event_api.src.environment import (
@@ -192,7 +187,7 @@ def create_event() -> int:
 
     :returns: Registered event ID of the event.
     """
-    auth = authenticate(NadeoService.CLUB, os.getenv(UBI_AUTH))
+    auth = os.getenv(UBI_AUTH)
     event_name = os.getenv(EVENT_NAME)
     club_id = os.getenv(CLUB_ID)
     campaign_id = os.getenv(CAMPAIGN_ID)

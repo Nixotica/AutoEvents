@@ -25,7 +25,9 @@ def get_ubi_auth_from_secrets() -> str:
     :returns: Ubi Auth
     """
     json_content = (
-        s3_client.get_object(Bucket=SECRETS_BUCKET_NAME, Key=SECRET_FILE)["Body"]
+        s3_client.get_object(Bucket=os.getenv(SECRETS_BUCKET_NAME), Key=SECRET_FILE)[
+            "Body"
+        ]
         .read()
         .decode("utf-8")
     )

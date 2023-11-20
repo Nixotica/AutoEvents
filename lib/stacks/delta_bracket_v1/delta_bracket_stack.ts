@@ -1,4 +1,4 @@
-import { Stack, StackProps } from "aws-cdk-lib";
+import { Duration, Stack, StackProps } from "aws-cdk-lib";
 import { Rule, RuleTargetInput, Schedule } from "aws-cdk-lib/aws-events";
 import { LambdaFunction } from "aws-cdk-lib/aws-events-targets";
 import { PythonFunction } from "@aws-cdk/aws-lambda-python-alpha";
@@ -38,6 +38,7 @@ export class DeltaBracketStack extends Stack {
             entry: "./lib/lambdas/",
             index: "lambda_handler.py",
             handler: "handler",
+            timeout: Duration.seconds(30),
             environment: {
                 "EVENT_NAME": props.event_name,
                 "CLUB_ID": props.club_id.toString(),

@@ -206,7 +206,7 @@ def create_event() -> Event:
     round_1 = get_round_1(
         start_time + timedelta(minutes=35),
         start_time + timedelta(minutes=65),
-        get_round_config(2, []),  # AH
+        get_round_config(2, map_pool),
         qualifier,
     )
 
@@ -221,7 +221,7 @@ def create_event() -> Event:
     round_3 = get_round_3(
         start_time + timedelta(minutes=105),
         start_time + timedelta(minutes=135),
-        get_round_config(3, []),  # AH
+        get_round_config(3, map_pool),
     )
 
     event = Event(

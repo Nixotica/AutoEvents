@@ -25,7 +25,7 @@ if (process.env.STAGE == 'dev') {
     new DeltaBracketStack(app, 'DeltaBracketStack-beta', {
         env: env,
         stage: 'beta',
-        event_name: "Delta Bracket Beta Test",
+        event_name: "DBBetaTest",
         club_id: 69352, // "Auto Events Staging"
         campaign_id: 55190, // "DO NOT MODIFY"
         secrets_bucket: resourcesStack.secretsBucket,
@@ -33,7 +33,7 @@ if (process.env.STAGE == 'dev') {
     new DeltaBracketStack(app, 'DeltaBracketStack-prod', {
         env: env,
         stage: 'prod',
-        event_name: "Delta Bracket Beta",
+        event_name: "Delta Bracket",
         club_id: 58261, // "Auto Events"
         campaign_id: 55644, // "Delta Bracket Beta"
         secrets_bucket: resourcesStack.secretsBucket,

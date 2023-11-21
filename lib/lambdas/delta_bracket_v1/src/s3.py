@@ -6,6 +6,7 @@ from nadeo_event_api.src.environment import (
     EVENT_NAME,
     STORAGE_BUCKET_NAME,
     SECRETS_BUCKET_NAME,
+    UBI_AUTH,
 )
 
 from nadeo_event_api.src.constants import (
@@ -24,6 +25,9 @@ def get_ubi_auth_from_secrets() -> str:
 
     :returns: Ubi Auth
     """
+    env_auth = os.getenv(UBI_AUTH)
+    if env_auth:
+        return env_auth
     json_content = (
         s3_client.get_object(Bucket=os.getenv(SECRETS_BUCKET_NAME), Key=SECRET_FILE)[
             "Body"

@@ -61,6 +61,7 @@ Actions:
     Configuration:
       StackName: DeltaBracketStack-beta
       Region: us-west-2
+      CdkCliVersion: latest
     DependsOn:
       - CDKBootstrap
         
@@ -104,6 +105,7 @@ Actions:
     Configuration:
       StackName: DeltaBracketStack-prod
       Region: us-west-2
+      CdkCliVersion: latest
     DependsOn:
       - IntegrationTest
       

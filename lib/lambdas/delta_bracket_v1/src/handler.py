@@ -16,8 +16,8 @@ def delta_bracket_v1_handler(event, context):
 
     action = event["action"]
     if action == "create":
-        event_id = create_event()
-        upload_event_id_to_s3(event_id)
+        event = create_event()
+        upload_event_id_to_s3(event._registered_id)
     elif action == "delete":
         event_id = get_latest_event_id_from_s3()
         delete_event(event_id)

@@ -1,7 +1,7 @@
 from datetime import datetime, timedelta
 import os
 from typing import List
-from delta_bracket_v1.src.s3 import get_ubi_auth_from_secrets, upload_event_id_to_s3
+from delta_bracket_v1.src.s3 import get_ubi_auth_from_secrets
 from nadeo_event_api.src.api.club.campaign import Campaign
 from nadeo_event_api.src.api.structure.enums import (
     LeaderboardType,
@@ -231,5 +231,4 @@ def create_event() -> Event:
         description="Project Delta presents an automatically hosted weekly event every Saturday 7:00pm UTC. Join the discord: https://discord.gg/Nj2rDjqQPh",
     )
     event.post(auth)
-    upload_event_id_to_s3(event._registered_id)
     return event

@@ -1,10 +1,10 @@
 import os
 
 import pytest
-from src.constants import CLUB_AUTO_EVENTS_STAGING
-from src.api.club.campaign import Campaign
-from src.api.structure.maps import PlaylistMap
-from src.environment import UBI_AUTH
+from nadeo_event_api.src.constants import CLUB_AUTO_EVENTS_STAGING
+from nadeo_event_api.src.api.club.campaign import Campaign
+from nadeo_event_api.src.api.structure.maps import PlaylistMap
+from nadeo_event_api.src.environment import UBI_AUTH
 import unittest
 
 

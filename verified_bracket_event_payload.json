@@ -1,0 +1,366 @@
+{
+    "clubId": 69352,
+    "description": "Project Delta presents an automatically hosted weekly event every Saturday 7:00pm UTC. Join the discord: https://discord.gg/Nj2rDjqQPh",
+    "name": "manual test",
+    "registrationEndDate": null,
+    "registrationStartDate": null,
+    "rounds": [
+      {
+        "name": "Quarter Finals",
+        "position": 0,
+        "startDate": "2023-11-26T03:35:00.000Z",
+        "endDate": "2023-11-26T04:05:00.000Z",
+        "nbMatches": 0,
+        "qualifier": {
+          "config": {
+            "name": "Qualifier",
+            "maps": [
+              "UGGBkWkQrVhRN_A21iPrC7N1vzl",
+              "rWQJGIHxjigGa0yB8KiNmwBLMCe",
+              "55swQ8IfqZCkloLBFnMDQjOGRii",
+              "qixNDvlk9TPcStquClVVoSftNwj",
+              "fdArnftBTYFWzhqfiGIgjjl3XJ3"
+            ],
+            "script": "TrackMania/TM_TimeAttack_Online.Script.txt",
+            "plugin": "",
+            "pluginSettings": {
+              "S_AdImageUrls": "",
+              "S_MessageTimer": ""
+            },
+            "maxPlayers": 64,
+            "maxSpectators": 64,
+            "scriptSettings": {
+              "S_TimeLimit": 300,
+              "S_WarmUpNb": 1,
+              "S_WarmUpDuration": 15,
+              "S_ForceLapsNb": 0
+            }
+          },
+          "endDate": "2023-11-26T03:30:00.000Z",
+          "leaderboardType": "SUM",
+          "position": 0,
+          "startDate": "2023-11-26T03:00:00.000Z",
+          "id": null,
+          "name": "Qualifier",
+          "isQualification": true
+        },
+        "leaderboardType": "BRACKET",
+        "config": {
+          "name": "Quarter Finals",
+          "maps": [],
+          "script": "TrackMania/TM_Cup_Online.Script.txt",
+          "plugin": "",
+          "pluginSettings": {
+            "S_AdImageUrls": "",
+            "S_AutoStartMode": "delay",
+            "S_AutoStartDelay": 300,
+            "S_PickBanStartAuto": false,
+            "S_PickBanOrder": "b:0,p:1,p:2,p:3,p:0",
+            "S_EnableReadyManager": true,
+            "S_UseAutoReady": true,
+            "S_ReadyStartRatio": 1,
+            "S_MessageTimer": ""
+          },
+          "maxPlayers": 4,
+          "maxSpectators": 32,
+          "scriptSettings": {
+            "S_PointsRepartition": "",
+            "S_PointsLimit": 120,
+            "S_FinishTimeout": -1,
+            "S_RoundsPerMap": 5,
+            "S_NbOfWinners": 2,
+            "S_WarmUpNb": 1,
+            "S_WarmUpDuration": 15
+          }
+        },
+        "teamLeaderboardType": "TEAM_SCORE"
+      },
+      {
+        "name": "Semi Finals",
+        "position": 1,
+        "startDate": "2023-11-26T04:10:00.000Z",
+        "endDate": "2023-11-26T04:40:00.000Z",
+        "nbMatches": 0,
+        "qualifier": null,
+        "leaderboardType": "BRACKET",
+        "config": {
+          "name": "Semi Finals",
+          "maps": [
+            "UGGBkWkQrVhRN_A21iPrC7N1vzl",
+            "rWQJGIHxjigGa0yB8KiNmwBLMCe",
+            "55swQ8IfqZCkloLBFnMDQjOGRii",
+            "qixNDvlk9TPcStquClVVoSftNwj",
+            "fdArnftBTYFWzhqfiGIgjjl3XJ3"
+          ],
+          "script": "TrackMania/TM_Cup_Online.Script.txt",
+          "plugin": "",
+          "pluginSettings": {
+            "S_AdImageUrls": "",
+            "S_AutoStartMode": "delay",
+            "S_AutoStartDelay": 300,
+            "S_PickBanStartAuto": true,
+            "S_PickBanOrder": "b:0,p:1,p:2,p:3,p:0",
+            "S_EnableReadyManager": true,
+            "S_UseAutoReady": true,
+            "S_ReadyStartRatio": 1,
+            "S_MessageTimer": ""
+          },
+          "maxPlayers": 4,
+          "maxSpectators": 32,
+          "scriptSettings": {
+            "S_PointsRepartition": "",
+            "S_PointsLimit": 120,
+            "S_FinishTimeout": -1,
+            "S_RoundsPerMap": 5,
+            "S_NbOfWinners": 2,
+            "S_WarmUpNb": 1,
+            "S_WarmUpDuration": 15
+          }
+        },
+        "teamLeaderboardType": "TEAM_SCORE"
+      },
+      {
+        "name": "Grand Finals",
+        "position": 2,
+        "startDate": "2023-11-26T04:45:00.000Z",
+        "endDate": "2023-11-26T05:15:00.000Z",
+        "nbMatches": 0,
+        "qualifier": null,
+        "leaderboardType": "BRACKET",
+        "config": {
+          "name": "Grand Finals",
+          "maps": [],
+          "script": "TrackMania/TM_Cup_Online.Script.txt",
+          "plugin": "",
+          "pluginSettings": {
+            "S_AdImageUrls": "",
+            "S_AutoStartMode": "delay",
+            "S_AutoStartDelay": 300,
+            "S_PickBanStartAuto": false,
+            "S_PickBanOrder": "b:0,p:1,p:2,p:3,p:0",
+            "S_EnableReadyManager": true,
+            "S_UseAutoReady": true,
+            "S_ReadyStartRatio": 1,
+            "S_MessageTimer": ""
+          },
+          "maxPlayers": 4,
+          "maxSpectators": 32,
+          "scriptSettings": {
+            "S_PointsRepartition": "",
+            "S_PointsLimit": 120,
+            "S_FinishTimeout": -1,
+            "S_RoundsPerMap": 5,
+            "S_NbOfWinners": 3,
+            "S_WarmUpNb": 1,
+            "S_WarmUpDuration": 15
+          }
+        },
+        "teamLeaderboardType": "TEAM_SCORE"
+      }
+    ],
+    "rulesUrl": null,
+    "spotStructure": {
+      "version": 0,
+      "rounds": [
+        {
+          "name": "Quarter Finals",
+          "matchGeneratorData": {
+            "matches": [
+              {
+                "spots": [
+                  {
+                    "spotType": "competition_participant",
+                    "seed": 1
+                  },
+                  {
+                    "spotType": "competition_participant",
+                    "seed": 8
+                  },
+                  {
+                    "spotType": "competition_participant",
+                    "seed": 9
+                  },
+                  {
+                    "spotType": "competition_participant",
+                    "seed": 16
+                  }
+                ],
+                "settings": []
+              },
+              {
+                "spots": [
+                  {
+                    "spotType": "competition_participant",
+                    "seed": 2
+                  },
+                  {
+                    "spotType": "competition_participant",
+                    "seed": 7
+                  },
+                  {
+                    "spotType": "competition_participant",
+                    "seed": 10
+                  },
+                  {
+                    "spotType": "competition_participant",
+                    "seed": 15
+                  }
+                ],
+                "settings": []
+              },
+              {
+                "spots": [
+                  {
+                    "spotType": "competition_participant",
+                    "seed": 3
+                  },
+                  {
+                    "spotType": "competition_participant",
+                    "seed": 6
+                  },
+                  {
+                    "spotType": "competition_participant",
+                    "seed": 11
+                  },
+                  {
+                    "spotType": "competition_participant",
+                    "seed": 14
+                  }
+                ],
+                "settings": []
+              },
+              {
+                "spots": [
+                  {
+                    "spotType": "competition_participant",
+                    "seed": 4
+                  },
+                  {
+                    "spotType": "competition_participant",
+                    "seed": 5
+                  },
+                  {
+                    "spotType": "competition_participant",
+                    "seed": 12
+                  },
+                  {
+                    "spotType": "competition_participant",
+                    "seed": 13
+                  }
+                ],
+                "settings": []
+              }
+            ]
+          },
+          "matchGeneratorType": "spot_filler"
+        },
+        {
+          "name": "Semi Finals",
+          "matchGeneratorData": {
+            "matches": [
+              {
+                "spots": [
+                  {
+                    "spotType": "match_participant",
+                    "roundPosition": 0,
+                    "matchPosition": 0,
+                    "rank": 1
+                  },
+                  {
+                    "spotType": "match_participant",
+                    "roundPosition": 0,
+                    "matchPosition": 1,
+                    "rank": 2
+                  },
+                  {
+                    "spotType": "match_participant",
+                    "roundPosition": 0,
+                    "matchPosition": 2,
+                    "rank": 2
+                  },
+                  {
+                    "spotType": "match_participant",
+                    "roundPosition": 0,
+                    "matchPosition": 3,
+                    "rank": 1
+                  }
+                ],
+                "settings": []
+              },
+              {
+                "spots": [
+                  {
+                    "spotType": "match_participant",
+                    "roundPosition": 0,
+                    "matchPosition": 0,
+                    "rank": 2
+                  },
+                  {
+                    "spotType": "match_participant",
+                    "roundPosition": 0,
+                    "matchPosition": 1,
+                    "rank": 1
+                  },
+                  {
+                    "spotType": "match_participant",
+                    "roundPosition": 0,
+                    "matchPosition": 2,
+                    "rank": 1
+                  },
+                  {
+                    "spotType": "match_participant",
+                    "roundPosition": 0,
+                    "matchPosition": 3,
+                    "rank": 2
+                  }
+                ],
+                "settings": []
+              }
+            ]
+          },
+          "matchGeneratorType": "spot_filler"
+        },
+        {
+          "name": "Grand Finals",
+          "matchGeneratorData": {
+            "matches": [
+              {
+                "spots": [
+                  {
+                    "spotType": "match_participant",
+                    "roundPosition": 1,
+                    "matchPosition": 0,
+                    "rank": 1
+                  },
+                  {
+                    "spotType": "match_participant",
+                    "roundPosition": 1,
+                    "matchPosition": 0,
+                    "rank": 2
+                  },
+                  {
+                    "spotType": "match_participant",
+                    "roundPosition": 1,
+                    "matchPosition": 1,
+                    "rank": 1
+                  },
+                  {
+                    "spotType": "match_participant",
+                    "roundPosition": 1,
+                    "matchPosition": 1,
+                    "rank": 2
+                  }
+                ],
+                "settings": []
+              }
+            ]
+          },
+          "matchGeneratorType": "spot_filler"
+        }
+      ]
+    },
+    "startDate": "",
+    "maxPlayers": 10000,
+    "allowedZone": "",
+    "participantType": "PLAYER"
+  }

@@ -136,6 +136,11 @@ class Event:
                 return False
         elif self._registration_start_date or self._registration_end_date:
             print("Event registration start and end must be specified together.")
+            return False
+
+        if len(self._name) > 16:
+            print("Event name is probably too long and will break.")
+            return False
 
         # TODO check that all rounds, qualifiers, matches, etc are formed correctly (+ maps are real)
 

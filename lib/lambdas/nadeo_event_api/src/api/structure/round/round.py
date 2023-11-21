@@ -74,7 +74,7 @@ class Round:
         round["name"] = self._name
         round["startDate"] = self._start_date.strftime(NADEO_DATE_FMT)
         round["endDate"] = self._end_date.strftime(NADEO_DATE_FMT)
-        round["nbMatches"] = len(self._matches)
+        round["nbMatches"] = 0  # It always starts with zero by default
         round["leaderboardType"] = self._leaderboard_type.value
         round["config"] = self._config.as_jsonable_dict()
         round["config"]["name"] = self._name

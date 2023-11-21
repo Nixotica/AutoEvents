@@ -1,7 +1,7 @@
 from datetime import datetime, timedelta
 import os
 from typing import List
-from delta_bracket_v1.s3 import get_ubi_auth_from_secrets
+from delta_bracket_v1.src.s3 import get_ubi_auth_from_secrets, upload_event_id_to_s3
 from nadeo_event_api.src.api.club.campaign import Campaign
 from nadeo_event_api.src.api.structure.enums import (
     LeaderboardType,
@@ -58,7 +58,7 @@ def get_round_config(num_winners: int, map_pool: List[Map]) -> RoundConfig:
         script_settings=ScriptSettings(
             points_limit=120,
             number_of_winners=num_winners,
-            rounds_per_map=4,
+            rounds_per_map=5,
             warmup_duration=15,
         ),
     )
@@ -181,7 +181,7 @@ def get_round_3(
     )
 
 
-def create_event() -> int:
+def create_event() -> Event:
     """
     Creates a new delta bracket event starting at the next Saturday 7:00pm UTC.
 
@@ -189,8 +189,8 @@ def create_event() -> int:
     """
     auth = get_ubi_auth_from_secrets()
     event_name = os.getenv(EVENT_NAME)
-    club_id = os.getenv(CLUB_ID)
-    campaign_id = os.getenv(CAMPAIGN_ID)
+    club_id = int(os.getenv(CLUB_ID))
+    campaign_id = int(os.getenv(CAMPAIGN_ID))
 
     # Get the map pool
     campaign_playlist = Campaign(club_id, campaign_id, auth)._playlist
@@ -206,7 +206,7 @@ def create_event() -> int:
     round_1 = get_round_1(
         start_time + timedelta(minutes=35),
         start_time + timedelta(minutes=65),
-        get_round_config(2, map_pool),
+        get_round_config(2, []),  # AH
         qualifier,
     )
 
@@ -221,7 +221,7 @@ def create_event() -> int:
     round_3 = get_round_3(
         start_time + timedelta(minutes=105),
         start_time + timedelta(minutes=135),
-        get_round_config(3, map_pool),
+        get_round_config(3, []),  # AH
     )
 
     event = Event(
@@ -231,3 +231,5 @@ def create_event() -> int:
         description="Project Delta presents an automatically hosted weekly event every Saturday 7:00pm UTC. Join the discord: https://discord.gg/Nj2rDjqQPh",
     )
     event.post(auth)
+    upload_event_id_to_s3(event._registered_id)
+    return event

@@ -1,7 +1,7 @@
 import unittest
 from unittest.mock import MagicMock, patch
-from src.api.enums import NadeoService
-from src.api.authenticate import authenticate
+from nadeo_event_api.src.api.enums import NadeoService
+from nadeo_event_api.src.api.authenticate import authenticate
 
 
 class TestAuthenticate(unittest.TestCase):

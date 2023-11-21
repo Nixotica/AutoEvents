@@ -44,7 +44,7 @@ Actions:
       Type: EC2
     Configuration:
       Region: us-west-2
-      CdkCliVersion: 2.103.1
+      CdkCliVersion: latest
     DependsOn:
       - UnitTest
 

@@ -1,5 +1,4 @@
-import os
-from delta_bracket_v1.handler import delta_bracket_v1_handler
+from delta_bracket_v1.src.handler import delta_bracket_v1_handler
 
 
 def handler(event, context):

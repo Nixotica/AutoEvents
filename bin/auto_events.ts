@@ -9,14 +9,14 @@ const env = {
 }
 
 // Common resources stack
-const resourcesStack = new AutoEventsStack(app, 'AutoEventsStack-beta', {env: env});
+const resourcesStack = new AutoEventsStack(app, 'AutoEventsResourcesStack', {env: env});
 
 // For local testing, make sure you've run `export STAGE=dev`
 if (process.env.STAGE == 'dev') {
     new DeltaBracketStack(app, 'DeltaBracketStack-dev', {
         env: env,
         stage: 'dev',
-        event_name: "Delta Bracket Dev Test",
+        event_name: "DBDevTest",
         club_id: 69352, // "Auto Events Staging"
         campaign_id: 55190, // "DO NOT MODIFY"
         secrets_bucket: resourcesStack.secretsBucket,

@@ -196,6 +196,9 @@ def create_event() -> Event:
     campaign_playlist = Campaign(club_id, campaign_id, auth)._playlist
     map_pool = [Map(campaign_map._uuid) for campaign_map in campaign_playlist]
 
+    # Create registration at now
+    registration_start = datetime.utcnow()
+
     # Create the event at the upcoming Saturday 7:00pm UTC
     start_time = get_event_start()
 
@@ -227,6 +230,8 @@ def create_event() -> Event:
     event = Event(
         name=event_name,
         club_id=club_id,
+        registration_start_date=registration_start,
+        registration_end_date=start_time + timedelta(minutes=5),
         rounds=[round_1, round_2, round_3],
         description="Project Delta presents an automatically hosted weekly event every Saturday 7:00pm UTC. Join the discord: https://discord.gg/Nj2rDjqQPh",
     )

@@ -198,8 +198,8 @@ def create_event() -> Event:
     campaign_playlist = Campaign(club_id, campaign_id)._playlist
     map_pool = [Map(campaign_map._uuid) for campaign_map in campaign_playlist]
 
-    # Create registration at now
-    registration_start = datetime.utcnow()
+    # Create registration at now + some offset so it's not in the past
+    registration_start = datetime.utcnow() + timedelta(seconds=10)
 
     # Create the event at the upcoming Saturday 7:00pm UTC
     start_time = get_event_start()

@@ -1,7 +1,6 @@
 from datetime import datetime, timedelta
 import os
 from typing import List
-from delta_bracket_v1.src.s3 import get_ubi_auth_from_secrets
 from nadeo_event_api.src.api.club.campaign import Campaign
 from nadeo_event_api.src.api.structure.enums import (
     LeaderboardType,
@@ -24,6 +23,7 @@ from nadeo_event_api.src.api.structure.round.round import (
 )
 from nadeo_event_api.src.api.structure.settings import (
     PluginSettings,
+    QualifierScriptSettings,
     ScriptSettings,
 )
 from nadeo_event_api.src.environment import (
@@ -51,8 +51,8 @@ def get_round_config(num_winners: int, map_pool: List[Map]) -> RoundConfig:
         script=ScriptType.CUP,
         max_players=4,
         plugin_settings=PluginSettings(
-            auto_start_delay=300,
-            pick_ban_start_auto=True,
+            auto_start_delay=120,
+            pick_ban_start_auto=False,
             pick_ban_order="b:0,p:1,p:2,p:3,p:0",
         ),
         script_settings=ScriptSettings(
@@ -75,6 +75,9 @@ def get_qualifier(
         config=QualifierConfig(
             map_pool=map_pool,
             script=ScriptType.TIME_ATTACK,
+            script_settings=QualifierScriptSettings(
+                time_limit=180,
+            ),
         ),
     )
 
@@ -196,33 +199,33 @@ def create_event() -> Event:
     map_pool = [Map(campaign_map._uuid) for campaign_map in campaign_playlist]
 
     # Create registration at now
-    registration_start = datetime.utcnow() + timedelta(minutes=5)
+    registration_start = datetime.utcnow()
 
     # Create the event at the upcoming Saturday 7:00pm UTC
     start_time = get_event_start()
 
-    # Qualifier 7:00 - 7:30
-    qualifier = get_qualifier(start_time, start_time + timedelta(minutes=30), map_pool)
+    # Qualifier 7:00 - 7:18
+    qualifier = get_qualifier(start_time, start_time + timedelta(minutes=18), map_pool)
 
-    # Round 1 7:35 - 8:05
+    # Round 1 7:20 - 7:50
     round_1 = get_round_1(
-        start_time + timedelta(minutes=35),
-        start_time + timedelta(minutes=65),
+        qualifier._end_date + timedelta(minutes=2),
+        qualifier._end_date + timedelta(minutes=32),
         get_round_config(2, map_pool),
         qualifier,
     )
 
-    # Round 2 8:10 - 8:40
+    # Round 2 7:52 - 8:22
     round_2 = get_round_2(
-        start_time + timedelta(minutes=70),
-        start_time + timedelta(minutes=100),
+        round_1._end_date + timedelta(minutes=2),
+        round_1._end_date + timedelta(minutes=32),
         get_round_config(2, map_pool),
     )
 
-    # Round 3 8:45 - 9:15
+    # Round 3 8:24 - 8:54
     round_3 = get_round_3(
-        start_time + timedelta(minutes=105),
-        start_time + timedelta(minutes=135),
+        round_2._end_date + timedelta(minutes=2),
+        round_2._end_date + timedelta(minutes=32),
         get_round_config(3, map_pool),
     )
 
@@ -230,7 +233,7 @@ def create_event() -> Event:
         name=event_name,
         club_id=club_id,
         registration_start_date=registration_start,
-        registration_end_date=start_time + timedelta(minutes=5),
+        registration_end_date=qualifier._end_date,
         rounds=[round_1, round_2, round_3],
         description="Project Delta presents an automatically hosted weekly event every Saturday 7:00pm UTC. Join the discord: https://discord.gg/Nj2rDjqQPh",
     )

@@ -15,9 +15,7 @@ class TestCampaign(unittest.TestCase):
         test_club_id = CLUB_AUTO_EVENTS_STAGING
         test_campaign_id = 55190
 
-        auth = os.getenv(UBI_AUTH)
-
-        test_campaign = Campaign(test_club_id, test_campaign_id, auth)
+        test_campaign = Campaign(test_club_id, test_campaign_id)
 
         expected = [
             PlaylistMap("UGGBkWkQrVhRN_A21iPrC7N1vzl", 0),

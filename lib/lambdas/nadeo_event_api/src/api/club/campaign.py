@@ -1,6 +1,5 @@
 from __future__ import annotations
-from nadeo_event_api.src.api.authenticate import authenticate
-from nadeo_event_api.src.api.enums import NadeoService
+from nadeo_event_api.src.api.authenticate import UbiTokenManager
 import requests
 from nadeo_event_api.src.constants import CLUB_CAMPAIGN_URL_FMT
 
@@ -12,13 +11,12 @@ class Campaign:
         self,
         club_id: int,
         campaign_id: int,
-        auth: str,
     ):
         self._club_id = club_id
         self._campaign_id = campaign_id
         self._playlist = None
 
-        token = authenticate(NadeoService.LIVE, auth)
+        token = UbiTokenManager().nadeo_live_token
         response = requests.get(
             url=CLUB_CAMPAIGN_URL_FMT.format(club_id, campaign_id),
             headers={"Authorization": "nadeo_v1 t=" + token},

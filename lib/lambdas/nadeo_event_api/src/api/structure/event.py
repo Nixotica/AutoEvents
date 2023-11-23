@@ -9,7 +9,7 @@ from nadeo_event_api.src.constants import (
     NADEO_DATE_FMT,
 )
 
-from nadeo_event_api.src.api.authenticate import authenticate
+from nadeo_event_api.src.api.authenticate import UbiTokenManager
 
 from nadeo_event_api.src.api.structure.round.round import Round
 
@@ -34,17 +34,14 @@ class Event:
         self._registered_id = None
         """ The ID this event is registered under in Nadeo's database. None if not registered. """
 
-    def post(self, auth: str) -> None:
+    def post(self) -> None:
         """
         Posts the event if valid.
-
-        :param auth: The authorization token for Ubisoft (e.g. "Basic <user:pass base 64>").
         """
         if not self.valid():
             print("Event is not valid, and therefore will not post.")
             return
-
-        token = authenticate(NadeoService.CLUB, auth)
+        token = UbiTokenManager().nadeo_club_token
         response = requests.post(
             url=CREATE_COMP_URL,
             headers={"Authorization": "nadeo_v1 t=" + token},
@@ -54,16 +51,14 @@ class Event:
             print("Failed to post event: ", response)
         self._registered_id = response["competition"]["id"]
 
-    def delete(self, auth: str) -> None:
+    def delete(self) -> None:
         """
         Deletes this event.
-
-        :param auth: The authorization token for Ubisoft (e.g. "Basic <user:pass base 64>").
         """
         if not self._registered_id:
             print("Could not delete event since it hasn't been posted.")
             return
-        token = authenticate(NadeoService.CLUB, auth)
+        token = UbiTokenManager().nadeo_club_token
         requests.post(
             url=DELETE_COMP_URL_FMT.format(self._registered_id),
             headers={"Authorization": "nadeo_v1 t=" + token},
@@ -71,14 +66,13 @@ class Event:
         self._registered_id = None
 
     @staticmethod
-    def delete_from_id(auth: str, event_id: int) -> None:
+    def delete_from_id(event_id: int) -> None:
         """
         Deletes the event with the given ID.
 
-        :param auth: The authorization token for Ubisoft (e.g. "Basic <user:pass base 64>").
         :param event_id: The ID of the event to delete.
         """
-        token = authenticate(NadeoService.CLUB, auth)
+        token = UbiTokenManager().nadeo_club_token
         requests.post(
             url=DELETE_COMP_URL_FMT.format(event_id),
             headers={"Authorization": "nadeo_v1 t=" + token},

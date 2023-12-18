@@ -20,6 +20,7 @@ class ScriptType(Enum):
 
     CUP = "TrackMania/TM_Cup_Online.Script.txt"
     TIME_ATTACK = "TrackMania/TM_TimeAttack_Online.Script.txt"
+    PRO_CUP = "TrackMania/Legacy/TM_CupClassic_Online.Script.txt"  # Spring TMGL 2022 interface
 
     # TODO support more script types
 

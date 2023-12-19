@@ -62,6 +62,8 @@ class ScriptSettings:
         number_of_winners: int = 3,
         warmup_number: int = 1,
         warmup_duration: int = 120,
+        match_points_limit: int = 2,
+        cup_points_limit: int = 2,
     ):
         self._points_repartition = points_repartition
         self._points_limit = points_limit
@@ -70,6 +72,9 @@ class ScriptSettings:
         self._number_of_winners = number_of_winners
         self._warmup_number = warmup_number
         self._warmup_duration = warmup_duration
+
+        self._match_points_limit = match_points_limit
+        self._cup_points_limit = cup_points_limit
 
     def as_jsonable_dict(self) -> dict:
         script_settings = {}
@@ -80,6 +85,9 @@ class ScriptSettings:
         script_settings["S_NbOfWinners"] = self._number_of_winners
         script_settings["S_WarmUpNb"] = self._warmup_number
         script_settings["S_WarmUpDuration"] = self._warmup_duration
+
+        script_settings["S_MatchPointsLimit"] = self._match_points_limit
+        script_settings["S_CupPointsLimit"] = self._cup_points_limit
         return script_settings
 
 

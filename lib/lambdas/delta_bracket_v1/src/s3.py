@@ -2,14 +2,13 @@ import json
 import os
 import boto3
 
-from nadeo_event_api.src.environment import (
+from nadeo_event_api.environment import (
     EVENT_NAME,
     STORAGE_BUCKET_NAME,
     SECRETS_BUCKET_NAME,
-    UBI_AUTH,
 )
 
-from nadeo_event_api.src.constants import (
+from nadeo_event_api.constants import (
     SECRET_FILE,
     SECRET_UBI_AUTH,
 )

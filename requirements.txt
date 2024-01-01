@@ -1,9 +1,13 @@
 pytest
 requests
 urllib3<2
+boto3
 
 
 pre-commit
+
+
+git+https://github.com/Nixotica/NadeoEventAPIWrapper.git@master#egg=nadeo_event_api&subdirectory=nadeo_event_api
 
 
 black

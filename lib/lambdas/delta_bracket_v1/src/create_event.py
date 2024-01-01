@@ -1,36 +1,36 @@
 from datetime import datetime, timedelta
 import os
 from typing import List
-from nadeo_event_api.src.api.club.campaign import Campaign
-from nadeo_event_api.src.api.structure.enums import (
+from nadeo_event_api.api.club.campaign import Campaign
+from nadeo_event_api.api.structure.enums import (
     LeaderboardType,
     ScriptType,
 )
-from nadeo_event_api.src.api.structure.event import Event
-from nadeo_event_api.src.api.structure.maps import Map
-from nadeo_event_api.src.api.structure.round.match import Match
-from nadeo_event_api.src.api.structure.round.match_spot import (
+from nadeo_event_api.api.structure.event import Event
+from nadeo_event_api.api.structure.maps import Map
+from nadeo_event_api.api.structure.round.match import Match
+from nadeo_event_api.api.structure.round.match_spot import (
     MatchParticipantMatchSpot,
     SeedMatchSpot,
 )
-from nadeo_event_api.src.api.structure.round.qualifier import (
+from nadeo_event_api.api.structure.round.qualifier import (
     Qualifier,
     QualifierConfig,
 )
-from nadeo_event_api.src.api.structure.round.round import (
+from nadeo_event_api.api.structure.round.round import (
     Round,
     RoundConfig,
 )
-from nadeo_event_api.src.api.structure.settings import (
-    PluginSettings,
-    QualifierScriptSettings,
-    ScriptSettings,
-)
-from nadeo_event_api.src.environment import (
+from nadeo_event_api.environment import (
     CAMPAIGN_ID,
     CLUB_ID,
     EVENT_NAME,
 )
+from nadeo_event_api.api.structure.settings.plugin_settings import ClassicPluginSettings
+from nadeo_event_api.api.structure.settings.script_settings import CupScriptSettings, TimeAttackScriptSettings
+from nadeo_event_api.api.authenticate import UbiTokenManager
+from nadeo_event_api.api.enums import NadeoService
+from .s3 import get_ubi_auth_from_secrets
 
 
 def get_event_start() -> datetime:
@@ -50,12 +50,12 @@ def get_round_config(num_winners: int, map_pool: List[Map]) -> RoundConfig:
         map_pool=map_pool,
         script=ScriptType.CUP,
         max_players=4,
-        plugin_settings=PluginSettings(
+        plugin_settings=ClassicPluginSettings(
             auto_start_delay=120,
             pick_ban_start_auto=False,
             pick_ban_order="b:0,p:1,p:2,p:3,p:0",
         ),
-        script_settings=ScriptSettings(
+        script_settings=CupScriptSettings(
             points_limit=120,
             number_of_winners=num_winners,
             rounds_per_map=5,
@@ -75,7 +75,7 @@ def get_qualifier(
         config=QualifierConfig(
             map_pool=map_pool,
             script=ScriptType.TIME_ATTACK,
-            script_settings=QualifierScriptSettings(
+            script_settings=TimeAttackScriptSettings(
                 time_limit=180,
             ),
         ),
@@ -188,11 +188,15 @@ def create_event() -> Event:
     """
     Creates a new delta bracket event starting at the next Saturday 7:00pm UTC.
 
-    :returns: Registered event ID of the event.
+    :returns: Registered ID of the event.
     """
     event_name = os.getenv(EVENT_NAME)
     club_id = int(os.getenv(CLUB_ID))
     campaign_id = int(os.getenv(CAMPAIGN_ID))
+
+    # Get ubi auth from s3, then force instantiate it so that event creation will use it. 
+    auth = get_ubi_auth_from_secrets()
+    UbiTokenManager().authenticate(NadeoService.CLUB, auth)
 
     # Get the map pool
     campaign_playlist = Campaign(club_id, campaign_id)._playlist

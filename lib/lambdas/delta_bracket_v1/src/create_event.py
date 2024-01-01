@@ -25,6 +25,7 @@ from nadeo_event_api.environment import (
     CAMPAIGN_ID,
     CLUB_ID,
     EVENT_NAME,
+    UBI_AUTH,
 )
 from nadeo_event_api.api.structure.settings.plugin_settings import ClassicPluginSettings
 from nadeo_event_api.api.structure.settings.script_settings import CupScriptSettings, TimeAttackScriptSettings
@@ -194,9 +195,12 @@ def create_event() -> Event:
     club_id = int(os.getenv(CLUB_ID))
     campaign_id = int(os.getenv(CAMPAIGN_ID))
 
-    # Get ubi auth from s3, then force instantiate it so that event creation will use it. 
-    auth = get_ubi_auth_from_secrets()
-    UbiTokenManager().authenticate(NadeoService.CLUB, auth)
+    # During integration tests in codecatalyst or env, we already have auth
+    auth = os.getenv(UBI_AUTH)
+    if auth is None:
+        # Get ubi auth from s3, then force instantiate it so that event creation will use it. 
+        auth = get_ubi_auth_from_secrets()
+        UbiTokenManager().authenticate(NadeoService.CLUB, auth)
 
     # Get the map pool
     campaign_playlist = Campaign(club_id, campaign_id)._playlist

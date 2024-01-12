@@ -1,4 +1,4 @@
-from nadeo_event_api.src.api.structure.event import Event
+from nadeo_event_api.api.structure.event import Event
 
 
 def delete_event(event_id: int):

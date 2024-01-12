@@ -1,6 +1,6 @@
 import os
 
-from nadeo_event_api.src.api.discord.webhook import post_discord_message
+from nadeo_event_api.api.discord.webhook import post_discord_message
 
 
 def notify_auto_cup() -> None:

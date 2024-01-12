@@ -1,2 +1,5 @@
 requests
 boto3
+urllib3<2
+
+git+https://github.com/Nixotica/NadeoEventAPIWrapper.git@release#egg=nadeo_event_api&subdirectory=nadeo_event_api

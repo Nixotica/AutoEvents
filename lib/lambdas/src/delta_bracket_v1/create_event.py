@@ -34,7 +34,7 @@ from nadeo_event_api.api.structure.settings.script_settings import (
 )
 from nadeo_event_api.api.authenticate import UbiTokenManager
 from nadeo_event_api.api.enums import NadeoService
-from .s3 import get_ubi_auth_from_secrets
+from ..s3 import get_ubi_auth_from_secrets
 
 
 def get_event_start() -> datetime:
@@ -192,7 +192,7 @@ def create_event() -> Event:
     """
     Creates a new delta bracket event starting at the next Saturday 7:00pm UTC.
 
-    :returns: Registered ID of the event.
+    :returns: The event.
     """
     event_name = os.getenv(EVENT_NAME)
     club_id = int(os.getenv(CLUB_ID))

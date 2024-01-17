@@ -17,7 +17,7 @@ The `cdk.json` file tells the CDK Toolkit how to execute your app.
 ## Development
 
 1. Run `pip install -r requirements.txt`.
-2. Set environment variables `UBI_AUTH`, `EVENT_NAME`, `CLUB_ID`, `CAMPAIGN_ID`, `SECRETS_BUCKET_NAME`, and `STORAGE_BUCKET_NAME` (these are all necessary for integration tests). Make sure that separate storage and secret s3 buckets exist in your AWS account. 
+2. Set environment variables `UBI_AUTH`, `EVENT_NAME`, `CLUB_ID`, `CAMPAIGN_ID`, `EVENT_CLUB_ID`, `MAPS_CLUB_ID`, `SECRETS_BUCKET_NAME`, and `STORAGE_BUCKET_NAME` (these are all necessary for integration tests). Make sure that separate storage and secret s3 buckets exist in your AWS account. 
 3. Run `aws configure` with your public and secret AWS access key. 
-4. Set `STAGE` to "dev", as this will be used for deploying your personal stack to test with.
+4. Set environment variable `STAGE` to "dev", as this will be used for deploying your personal stack to test with.
 5. Start using the Useful Commands to play around! 

@@ -1,4 +1,4 @@
-import { Stack, StackProps } from 'aws-cdk-lib';
+ import { Stack, StackProps } from 'aws-cdk-lib';
 import { Bucket, BucketAccessControl, BucketEncryption } from 'aws-cdk-lib/aws-s3';
 import { Construct } from 'constructs';
 

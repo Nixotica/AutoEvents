@@ -35,7 +35,7 @@ export class DeltaBracketStack extends Stack {
         // Create lambda which handles event actions
         const lambda = new PythonFunction(this, "DeltaBracketEventActionsLambda", {
             runtime: Runtime.PYTHON_3_10,
-            entry: "./lib/lambdas/",
+            entry: "./lib/lambdas/src/",
             index: "lambda_handler.py",
             handler: "handler",
             timeout: Duration.seconds(30),

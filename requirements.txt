@@ -2,6 +2,7 @@ pytest
 requests
 urllib3<2
 boto3
+pytz
 
 
 pre-commit

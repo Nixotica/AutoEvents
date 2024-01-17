@@ -34,7 +34,7 @@ from nadeo_event_api.api.structure.settings.script_settings import (
 )
 from nadeo_event_api.api.authenticate import UbiTokenManager
 from nadeo_event_api.api.enums import NadeoService
-from src.s3 import get_ubi_auth_from_secrets
+from ..s3 import get_ubi_auth_from_secrets
 
 
 def get_event_start() -> datetime:

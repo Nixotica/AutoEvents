@@ -22,9 +22,9 @@ from nadeo_event_api.api.structure.settings.plugin_settings import (
     ClassicPluginSettings,
     QualifierPluginSettings,
 )
-from ..s3 import get_ubi_auth_from_secrets
+from s3 import get_ubi_auth_from_secrets
 
-from ..pan_american_of_the_day.environment import (
+from pan_american_of_the_day.environment import (
     CAMPAIGN_ID,
     EVENT_CLUB_ID,
     EVENT_NAME,

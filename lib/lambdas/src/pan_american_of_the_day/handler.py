@@ -1,6 +1,6 @@
-from lib.lambdas.src.s3 import get_latest_event_id_from_s3, upload_event_id_to_s3
-from pan_american_of_the_day.src.delete_event import delete_event
-from pan_american_of_the_day.src.create_event import create_event
+from s3 import get_latest_event_id_from_s3, upload_event_id_to_s3
+from pan_american_of_the_day.delete_event import delete_event
+from pan_american_of_the_day.create_event import create_event
 
 
 def pan_american_of_the_day_handler(event, context):

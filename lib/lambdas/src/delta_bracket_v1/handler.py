@@ -1,6 +1,6 @@
 from delta_bracket_v1.delete_event import delete_event
 from delta_bracket_v1.create_event import create_event
-from lib.lambdas.src.s3 import (
+from s3 import (
     get_latest_event_id_from_s3,
     upload_event_id_to_s3,
 )

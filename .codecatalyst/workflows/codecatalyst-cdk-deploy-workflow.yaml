@@ -89,6 +89,8 @@ Actions:
         - Run: pip3 install -r requirements.txt
         - Run: export UBI_AUTH=${Secrets.UBI_AUTH}
         - Run: export CAMPAIGN_ID=55190
+        - Run: export EVENT_CLUB_ID=69352
+        - Run: export MAPS_CLUB_ID=69352
         - Run: export CLUB_ID=69352
         - Run: export EVENT_NAME=DBBetaTest
         - Run: pytest -m integration 

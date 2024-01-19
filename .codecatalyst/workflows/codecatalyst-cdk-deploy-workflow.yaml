@@ -112,7 +112,7 @@ Actions:
         - Run: export EVENT_NAME=DBBetaTest
         - Run: pytest -m integration 
     DependsOn:
-      - BetaDeploy
+      - BetaDeploy_PanAmericanOfTheDay
 
   ProdDeploy_DeltaBracket:
     Identifier: aws/cdk-deploy@v1

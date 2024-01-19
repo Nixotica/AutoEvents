@@ -48,7 +48,7 @@ Actions:
     DependsOn:
       - UnitTest
 
-  BetaDeploy:
+  BetaDeploy_DeltaBracket:
     Identifier: aws/cdk-deploy@v1
     Environment:
       Connections:
@@ -64,6 +64,23 @@ Actions:
       CdkCliVersion: latest
     DependsOn:
       - CDKBootstrap
+
+  BetaDeploy_PanAmericanOfTheDay:
+    Identifier: aws/cdk-deploy@v1
+    Environment:
+      Connections:
+        - Role: CodeCatalystWorkflowDevelopmentRole-AutoEvents
+          Name: "115984396435"
+      Name: prod-deploy
+    Inputs:
+      Sources:
+        - WorkflowSource
+    Configuration:
+      StackName: PanAmericanOfTheDayStack-beta
+      Region: us-west-2
+      CdkCliVersion: latest
+    DependsOn:
+      - BetaDeploy_DeltaBracket
         
   IntegrationTest:
     # Identifies the action. Do not modify this value.
@@ -97,7 +114,7 @@ Actions:
     DependsOn:
       - BetaDeploy
 
-  ProdDeploy:
+  ProdDeploy_DeltaBracket:
     Identifier: aws/cdk-deploy@v1
     Environment:
       Connections:
@@ -113,4 +130,21 @@ Actions:
       CdkCliVersion: latest
     DependsOn:
       - IntegrationTest
+      
+  ProdDeploy_PanAmericanOfTheDay:
+    Identifier: aws/cdk-deploy@v1
+    Environment:
+      Connections:
+        - Role: CodeCatalystWorkflowDevelopmentRole-AutoEvents
+          Name: "115984396435"
+      Name: prod-deploy
+    Inputs:
+      Sources:
+        - WorkflowSource
+    Configuration:
+      StackName: PanAmericanOfTheDayStack-prod
+      Region: us-west-2
+      CdkCliVersion: latest
+    DependsOn:
+      - ProdDeploy_DeltaBracket
       

@@ -130,7 +130,6 @@ def get_round_1(
                 ]
             ),
         ],
-        leaderboard_type=LeaderboardType.BRACKET,
         config=round_config,
         qualifier=qualifier,
     )
@@ -161,7 +160,6 @@ def get_round_2(
                 ]
             ),
         ],
-        leaderboard_type=LeaderboardType.BRACKET,
         config=round_config,
     )
 
@@ -183,7 +181,6 @@ def get_round_3(
                 ]
             )
         ],
-        leaderboard_type=LeaderboardType.BRACKET,
         config=round_config,
     )
 

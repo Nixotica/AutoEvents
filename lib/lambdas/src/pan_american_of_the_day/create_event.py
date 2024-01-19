@@ -1,4 +1,5 @@
 from datetime import datetime, timedelta
+import json
 import os
 import random
 from typing import List
@@ -63,14 +64,11 @@ def get_round(
         name="Knockout",
         start_date=start_date,
         end_date=end_date,
-        leaderboard_type=LeaderboardType.SUMSCORE,
         qualifier=qualifier,
         config=RoundConfig(
             map_pool=map_pool,
             script=ScriptType.KNOCKOUT,
             script_settings=KnockoutScriptSettings(
-                warmup_number=1,
-                warmup_duration=75,
                 finish_timeout=15,
                 rounds_without_elimination=1,
             ),
@@ -116,7 +114,7 @@ def create_event() -> Event:
     random_map = Map(random.choice(campaign_playlist)._uuid)
 
     # Create registration at now plus some offset so it's not in the past
-    registration_start = datetime.utcnow() + timedelta(seconds=10)
+    registration_start = datetime.utcnow() + timedelta(minutes=1)
 
     # Create the event at the upcoming 4:00am CET/CEST
     start_time = get_event_start()
@@ -143,6 +141,5 @@ def create_event() -> Event:
         rounds=[ko_round],
         description="This is a Pan-American daily KO event on the seasonal map pool! It is automatically hosted every night 1 hour after COTN. Join the discord: $lhttps://discord.gg/pj9C5znHzf",
     )
-    # print(json.dumps(event._as_jsonable_dict()))
     event.post()
     return event

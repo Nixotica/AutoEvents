@@ -72,13 +72,13 @@ export class PanAmericanOfTheDayStack extends Stack {
         // Call lambda with appropriate payload for create and delete
         deleteEventRule.addTarget(new LambdaFunction(lambda, {
             event: RuleTargetInput.fromObject({
-                "event_name": "paotc",
+                "event_name": "paotd",
                 "action": "delete",
             }),
         }));
         createEventRule.addTarget(new LambdaFunction(lambda, {
             event: RuleTargetInput.fromObject({
-                "event_name": "paotc",
+                "event_name": "paotd",
                 "action": "create",
             }),
         }));

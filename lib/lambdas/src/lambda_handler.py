@@ -17,5 +17,5 @@ def handler(event, context):
         return pan_american_of_the_day_handler(event, context)
     else:
         raise Exception(
-            f"Invalid event name {event_name}, choose one of (delta_bracket_v1)"
+            f"Invalid event name {event_name}, choose one of (delta_bracket_v1, paotd)"
         )

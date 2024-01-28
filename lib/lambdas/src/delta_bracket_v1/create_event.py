@@ -31,6 +31,7 @@ from nadeo_event_api.api.structure.settings.plugin_settings import ClassicPlugin
 from nadeo_event_api.api.structure.settings.script_settings import (
     CupScriptSettings,
     TimeAttackScriptSettings,
+    BaseScriptSettings,
 )
 from nadeo_event_api.api.authenticate import UbiTokenManager
 from nadeo_event_api.api.enums import NadeoService
@@ -60,10 +61,13 @@ def get_round_config(num_winners: int, map_pool: List[Map]) -> RoundConfig:
             pick_ban_order="b:0,p:1,p:2,p:3,p:0",
         ),
         script_settings=CupScriptSettings(
+            base_script_settings=BaseScriptSettings(
+                warmup_duration=15,
+                warmup_number=1,
+            ),
             points_limit=120,
             number_of_winners=num_winners,
             rounds_per_map=5,
-            warmup_duration=15,
         ),
     )
 

@@ -31,6 +31,7 @@ if (process.env.STAGE == 'dev') {
        maps_club_id: 69352, // "Auto Events Staging"
        campaign_id: 55190, // "DO NOT MODIFY"
        secrets_bucket: resourcesStack.secretsBucket,
+       notify: true, // Though set to true, 
     });
 } else {
     new DeltaBracketStack(app, 'DeltaBracketStack-beta', {
@@ -58,14 +59,16 @@ if (process.env.STAGE == 'dev') {
         maps_club_id: 69352, // "Auto Events Staging"
         campaign_id: 55190, // "DO NOT MODIFY"
         secrets_bucket: resourcesStack.secretsBucket,
+        notify: false,
     });
     new PanAmericanOfTheDayStack(app, 'PanAmericanOfTheDayStack-prod', {
         env: env,
         stage: 'prod',
         event_name: "PAOTD",
-        event_club_id: 58261, // "Auto Events"
+        event_club_id: 68298, // "Auto Events"
         maps_club_id: 68298, // "NCSA Trackmania"
-        campaign_id: 58789, // "PATC S2 Campaign" TODO switch to a rotating campaign
+        campaign_id: 60108, // "PASL Winter 2024"
         secrets_bucket: resourcesStack.secretsBucket,
+        notify: true,
     });
 }

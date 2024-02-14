@@ -19,8 +19,9 @@
     "typescript": "~5.2.2"
   },
   "dependencies": {
-    "@aws-cdk/aws-lambda-python-alpha": "2.110.0-alpha.0",
-    "aws-cdk-lib": "2.110.0",
+    "@aws-cdk/aws-lambda-python-alpha": "2.124.0-alpha.0",
+    "@aws-cdk/aws-scheduler-alpha": "latest",
+    "aws-cdk-lib": "latest",
     "constructs": "^10.0.0"
   }
 }

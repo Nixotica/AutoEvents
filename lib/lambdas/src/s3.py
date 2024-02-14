@@ -8,10 +8,9 @@ from nadeo_event_api.environment import (
     SECRETS_BUCKET_NAME,
 )
 
-from nadeo_event_api.constants import (
-    SECRET_FILE,
-    SECRET_UBI_AUTH,
-)
+SECRET_FILE = "secrets.json"
+SECRET_UBI_AUTH = "UBI_AUTH"
+SECRET_DISCORD_WEBHOOK_URL = "DISCORD_WEBHOOK_URL"
 
 s3_client = boto3.client("s3")
 s3_resource = boto3.resource("s3")
@@ -32,6 +31,22 @@ def get_ubi_auth_from_secrets() -> str:
         .decode("utf-8")
     )
     return json.loads(json_content)[SECRET_UBI_AUTH]
+
+
+def get_discord_webhook_url_from_secrets() -> str:
+    """
+    Accesses the encrypted secrets bucket to get the discord webhook url.
+
+    :returns: Webhook url
+    """
+    json_content = (
+        s3_client.get_object(Bucket=os.getenv(SECRETS_BUCKET_NAME), Key=SECRET_FILE)[
+            "Body"
+        ]
+        .read()
+        .decode("utf-8")
+    )
+    return json.loads(json_content)[SECRET_DISCORD_WEBHOOK_URL]
 
 
 def upload_event_id_to_s3(event_id: int) -> None:

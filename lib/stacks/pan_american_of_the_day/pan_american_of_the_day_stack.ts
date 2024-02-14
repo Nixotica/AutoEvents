@@ -1,5 +1,5 @@
 import { PythonFunction } from "@aws-cdk/aws-lambda-python-alpha";
-import { Duration, Stack, StackProps } from "aws-cdk-lib";
+import { Duration, Stack, StackProps, TimeZone } from "aws-cdk-lib";
 import { Rule, RuleTargetInput, Schedule } from "aws-cdk-lib/aws-events";
 import { LambdaFunction } from "aws-cdk-lib/aws-events-targets";
 import { Runtime } from "aws-cdk-lib/aws-lambda";
@@ -24,6 +24,9 @@ export interface PanAmericanOfTheDayStackProps extends StackProps {
 
     /** A common Auto Events bucket containing secrets to give lambdas read access to. */
     secrets_bucket: Bucket,
+
+    /** Indicates if we should post notifications to discord. */
+    notify: boolean,
 }
 
 export class PanAmericanOfTheDayStack extends Stack {
@@ -52,6 +55,25 @@ export class PanAmericanOfTheDayStack extends Stack {
                 "SECRETS_BUCKET_NAME": props.secrets_bucket.bucketName,
             },
         });
+
+
+        if (props.notify) {
+            // Create Rule which calls notify event at the given schedule
+            const notifyEventRule = new Rule(this, "PAOTD_Notify_Event_Rule", {
+                schedule: Schedule.cron({ // TODO https://github.com/aws/aws-cdk/issues/21181
+                    hour: "3",
+                    minute: "45",
+                })
+            });
+
+            // Call lambda with appropriate payload for notify
+            notifyEventRule.addTarget(new LambdaFunction(lambda, {
+                event: RuleTargetInput.fromObject({
+                    "event_name": "paotd",
+                    "action": "notify",
+                }),
+            }));
+        }
 
         // Create Rule which calls delete event at the given schedule
         const deleteEventRule = new Rule(this, "PAOTD_Delete_Event_Rule", {

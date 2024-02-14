@@ -17,7 +17,8 @@ from nadeo_event_api.api.structure.round.match import Match
 from nadeo_event_api.api.structure.round.match_spot import SeedMatchSpot
 from nadeo_event_api.api.structure.settings.script_settings import (
     TimeAttackScriptSettings,
-    KnockoutScriptSettings,
+    CupScriptSettings,
+    BaseScriptSettings,
 )
 from nadeo_event_api.api.structure.settings.plugin_settings import (
     ClassicPluginSettings,
@@ -61,16 +62,22 @@ def get_round(
     start_date: datetime, end_date: datetime, qualifier: Qualifier, map_pool: List[Map]
 ) -> Round:
     return Round(
-        name="Knockout",
+        name="PAOTD",
         start_date=start_date,
         end_date=end_date,
         qualifier=qualifier,
         config=RoundConfig(
             map_pool=map_pool,
-            script=ScriptType.KNOCKOUT,
-            script_settings=KnockoutScriptSettings(
+            script=ScriptType.CUP,
+            script_settings=CupScriptSettings(
+                base_script_settings=BaseScriptSettings(
+                    warmup_duration=75,
+                    warmup_number=1,
+                ),
                 finish_timeout=15,
-                rounds_without_elimination=1,
+                number_of_winners=1,
+                points_limit=120,
+                rounds_per_map=4,
             ),
             plugin_settings=ClassicPluginSettings(
                 auto_start_mode=AutoStartMode.DELAY,
@@ -111,7 +118,9 @@ def create_event() -> Event:
 
     # Get a random map from the campaign
     campaign_playlist = Campaign(maps_club_id, campaign_id)._playlist
-    random_map = Map(random.choice(campaign_playlist)._uuid)
+    random_4_maps = []
+    for i in range(0, 4):
+        random_4_maps.append(Map(random.choice(campaign_playlist)._uuid))
 
     # Create registration at now plus some offset so it's not in the past
     registration_start = datetime.utcnow() + timedelta(minutes=1)
@@ -119,17 +128,17 @@ def create_event() -> Event:
     # Create the event at the upcoming 4:00am CET/CEST
     start_time = get_event_start()
 
-    # Qualifier 4:00am - 4:06am
+    # Qualifier 4:00am - 4:05am
     qualifier = get_qualifier(
-        start_time, start_time + timedelta(minutes=6), [random_map]
+        start_time, start_time + timedelta(minutes=6), [random_4_maps[0]]
     )
 
-    # Knockout round 4:08am - 5:00am
-    ko_round = get_round(
+    # Rounds mode 4:08am - 5:00am
+    rounds = get_round(
         start_time + timedelta(minutes=8),
         start_time + timedelta(minutes=60),
         qualifier,
-        [random_map],
+        random_4_maps,
     )
 
     # Event
@@ -138,8 +147,8 @@ def create_event() -> Event:
         club_id=event_club_id,
         registration_start_date=registration_start,
         registration_end_date=qualifier._end_date,
-        rounds=[ko_round],
-        description="This is a Pan-American daily KO event on the seasonal map pool! It is automatically hosted every night 1 hour after COTN. Join the discord: $lhttps://discord.gg/pj9C5znHzf",
+        rounds=[rounds],
+        description="This is a Pan-American daily rounds event on the active NCSA competitive map pool! It is automatically hosted every night 1 hour after COTN. Join the discord: $lhttps://discord.gg/pj9C5znHzf",
     )
     event.post()
     return event

@@ -1,6 +1,7 @@
 from s3 import get_latest_event_id_from_s3, upload_event_id_to_s3
 from pan_american_of_the_day.delete_event import delete_event
 from pan_american_of_the_day.create_event import create_event
+from pan_american_of_the_day.notify_event import notify_event
 
 
 def pan_american_of_the_day_handler(event, context):
@@ -9,6 +10,7 @@ def pan_american_of_the_day_handler(event, context):
 
     1. Create event
     2. Delete event
+    3. Notify upcoming event
     """
 
     action = event["action"]
@@ -18,7 +20,9 @@ def pan_american_of_the_day_handler(event, context):
     elif action == "delete":
         event_id = get_latest_event_id_from_s3()
         delete_event(event_id)
+    elif action == "notify":
+        notify_event()
     else:
         raise Exception(
-            f"Invalid event action {action}, choose one of (create, delete)"
+            f"Invalid event action {action}, choose one of (create, delete, notify)"
         )

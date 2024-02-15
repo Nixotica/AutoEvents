@@ -74,11 +74,13 @@ export class PanAmericanOfTheDayStack extends Stack {
                 }),
             }));
         }
+        
+        // TODO call notify of participants and winners at hour 5:30
 
         // Create Rule which calls delete event at the given schedule
         const deleteEventRule = new Rule(this, "PAOTD_Delete_Event_Rule", {
             schedule: Schedule.cron({
-                hour: "0",
+                hour: "6",
                 minute: "0",
             }),
         });
@@ -86,7 +88,7 @@ export class PanAmericanOfTheDayStack extends Stack {
         // Create Rule which calls create event at the given schedule
         const createEventRule = new Rule(this, "PAOTD_Create_Event_Rule", {
             schedule: Schedule.cron({
-                hour: "1",
+                hour: "7",
                 minute: "0",
             }),
         });
